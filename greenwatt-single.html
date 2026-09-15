@@ -1,0 +1,1129 @@
+<!-- GreenWatt single-file build: HTML + CSS + JavaScript bundled together. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="GreenWatt — smarter electricity procurement intelligence for commercial India." />
+  <meta name="theme-color" content="#173d2b" />
+  <title>GreenWatt — Smarter Electricity Procurement</title>
+  <style>
+/* Inlined from assets/css/base.css */
+:root {
+  --ink: #17231d;
+  --ink-2: #33423a;
+  --muted: #66736c;
+  --forest: #173d2b;
+  --forest-2: #22543b;
+  --emerald: #2c7a54;
+  --emerald-soft: #e5f1ea;
+  --paper: #f6f6f2;
+  --surface: #ffffff;
+  --surface-2: #eff2ee;
+  --line: #dce3dd;
+  --line-strong: #c8d1ca;
+  --amber: #a66d14;
+  --amber-bg: #fbf3df;
+  --danger: #a9473d;
+  --danger-bg: #f8e9e7;
+  --blue: #2b5e7b;
+  --shadow: 0 14px 32px rgba(25, 48, 36, .08);
+  --radius: 14px;
+  --radius-sm: 9px;
+  --sidebar: 248px;
+  --content: 1180px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+}
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+button { border: 0; }
+img, svg { display: block; max-width: 100%; }
+
+h1, h2, h3, h4, p { margin-top: 0; }
+h1, h2, h3, h4 { letter-spacing: -0.035em; line-height: 1.08; }
+h1 { font-size: clamp(2.7rem, 7vw, 5.8rem); font-weight: 650; }
+h2 { font-size: clamp(2rem, 4.4vw, 3.6rem); font-weight: 640; }
+h3 { font-size: 1.28rem; font-weight: 650; }
+p { color: var(--ink-2); }
+small, .small { font-size: .82rem; color: var(--muted); }
+strong { font-weight: 650; }
+
+.container { width: min(var(--content), calc(100% - 40px)); margin: 0 auto; }
+.section { padding: 92px 0; }
+.section-sm { padding: 58px 0; }
+.eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .74rem; font-weight: 750; color: var(--emerald); }
+.lede { font-size: 1.12rem; max-width: 720px; color: var(--muted); }
+.muted { color: var(--muted); }
+.mono { font-variant-numeric: tabular-nums; }
+.hidden { display: none !important; }
+
+::selection { background: #cfe7d8; }
+:focus-visible { outline: 3px solid rgba(44,122,84,.28); outline-offset: 2px; }
+
+</style>
+  <style>
+/* Inlined from assets/css/layout.css */
+.public-shell { min-height: 100vh; }
+.public-header {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(246,246,242,.93);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(220,227,221,.8);
+}
+.public-nav { height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 780; letter-spacing: -.025em; }
+.brand-mark { width: 31px; height: 31px; border-radius: 9px 9px 9px 3px; background: var(--forest); position: relative; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.brand-mark::after { content:""; position:absolute; left:10px; top:7px; width:8px; height:14px; background:#cfe7d8; clip-path: polygon(50% 0,100% 42%,65% 42%,78% 100%,0 50%,36% 50%); }
+.brand-name { font-size: 1.08rem; }
+.nav-links { display: flex; align-items: center; gap: 26px; color: var(--ink-2); font-size: .92rem; }
+.nav-actions { display:flex; align-items:center; gap:10px; }
+.mobile-menu-btn { display:none; }
+
+.hero { padding: 88px 0 70px; overflow: hidden; }
+.hero-grid { display:grid; grid-template-columns: 1.03fr .97fr; gap: 70px; align-items:center; }
+.hero-copy h1 { max-width: 740px; margin-bottom: 24px; }
+.hero-copy .lede { font-size: 1.2rem; margin-bottom: 30px; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:12px; }
+.hero-proof { margin-top: 34px; display:flex; gap:22px; flex-wrap:wrap; color:var(--muted); font-size:.84rem; }
+.hero-proof span { display:flex; align-items:center; gap:8px; }
+.proof-dot { width:7px; height:7px; border-radius:50%; background:var(--emerald); }
+.hero-panel { position:relative; }
+.hero-panel::before { content:""; position:absolute; inset: 34px -70px -60px 18px; background:#e5ece6; z-index:-1; border-radius: 44px 0 0 44px; }
+
+.dark-section { background: var(--forest); color:#f6fbf7; }
+.dark-section p, .dark-section .muted { color:#bdd0c3; }
+.dark-section .eyebrow { color:#9fd1af; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start; }
+.three-col { display:grid; grid-template-columns:repeat(3, 1fr); gap:22px; }
+.four-col { display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; }
+.split-heading { display:grid; grid-template-columns: .8fr 1.2fr; gap:80px; margin-bottom:48px; }
+
+.app-shell { min-height:100vh; display:grid; grid-template-columns:var(--sidebar) 1fr; }
+.sidebar { position:fixed; inset:0 auto 0 0; width:var(--sidebar); background:#153727; color:#eef7f1; padding:22px 16px; z-index:35; display:flex; flex-direction:column; }
+.sidebar .brand { padding: 4px 8px 24px; }
+.demo-pill { margin: 0 6px 20px; background:rgba(255,255,255,.075); color:#c8decf; border:1px solid rgba(255,255,255,.09); padding:7px 9px; border-radius:8px; font-size:.73rem; display:flex; align-items:center; justify-content:space-between; }
+.sidebar-nav { display:flex; flex-direction:column; gap:4px; overflow:auto; }
+.sidebar-link { color:#bfd0c5; padding:9px 11px; border-radius:8px; font-size:.87rem; display:flex; align-items:center; gap:10px; transition:.16s ease; }
+.sidebar-link:hover { background:rgba(255,255,255,.06); color:#fff; }
+.sidebar-link.active { background:#f3f6f3; color:var(--forest); font-weight:650; }
+.sidebar-bottom { margin-top:auto; padding-top:16px; border-top:1px solid rgba(255,255,255,.1); }
+.app-main { grid-column:2; min-width:0; }
+.app-topbar { position:sticky; top:0; z-index:25; height:68px; background:rgba(246,246,242,.94); backdrop-filter: blur(14px); border-bottom:1px solid var(--line); display:flex; align-items:center; padding:0 32px; justify-content:space-between; }
+.topbar-title { font-weight:700; letter-spacing:-.02em; }
+.topbar-actions { display:flex; align-items:center; gap:10px; }
+.app-content { padding:30px 32px 70px; max-width:1500px; margin:0 auto; }
+.page-head { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:28px; }
+.page-head h1 { font-size:2rem; margin:0 0 7px; }
+.page-head p { margin:0; }
+.grid { display:grid; gap:18px; }
+.grid-2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.grid-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.grid-4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.span-2 { grid-column:span 2; }
+.span-3 { grid-column:span 3; }
+.mobile-bottom-nav { display:none; }
+
+</style>
+  <style>
+/* Inlined from assets/css/components.css */
+.btn { cursor:pointer; min-height:42px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 16px; border-radius:8px; font-weight:670; font-size:.9rem; transition:.16s ease; border:1px solid transparent; }
+.btn:hover { transform:translateY(-1px); }
+.btn:active { transform:translateY(0); }
+.btn-primary { background:var(--forest); color:#fff; }
+.btn-primary:hover { background:#0f3021; }
+.btn-secondary { background:var(--surface); color:var(--forest); border-color:var(--line-strong); }
+.btn-secondary:hover { border-color:#8ea699; }
+.btn-ghost { background:transparent; color:var(--ink-2); }
+.btn-danger { background:var(--danger-bg); color:var(--danger); }
+.btn-sm { min-height:34px; padding:0 11px; font-size:.8rem; }
+.btn-block { width:100%; }
+.icon-btn { width:38px; height:38px; border:1px solid var(--line); background:var(--surface); border-radius:9px; display:grid; place-items:center; cursor:pointer; }
+
+.panel { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 1px 0 rgba(20,40,30,.02); }
+.panel-pad { padding:22px; }
+.panel-head { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; margin-bottom:18px; }
+.panel-head h3 { margin:0 0 5px; }
+.panel-head p { margin:0; font-size:.86rem; color:var(--muted); }
+.soft-panel { background:var(--surface-2); border:1px solid #e1e6e1; border-radius:var(--radius); padding:20px; }
+.kpi { padding:20px; min-height:132px; }
+.kpi-label { color:var(--muted); font-size:.78rem; font-weight:650; margin-bottom:18px; }
+.kpi-value { font-size:1.65rem; font-weight:730; letter-spacing:-.04em; font-variant-numeric:tabular-nums; }
+.kpi-change { margin-top:7px; font-size:.77rem; color:var(--emerald); }
+.kpi-change.neutral { color:var(--muted); }
+
+.dashboard-preview { background:#fff; border:1px solid #d5ded7; border-radius:18px; padding:18px; box-shadow:var(--shadow); }
+.preview-top { display:flex; justify-content:space-between; align-items:center; padding-bottom:13px; border-bottom:1px solid var(--line); }
+.preview-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:14px 0; }
+.preview-metric { background:#f5f7f4; border-radius:9px; padding:11px; }
+.preview-metric small { display:block; margin-bottom:4px; }
+.preview-metric strong { font-size:1.05rem; }
+.recommendation-strip { display:grid; grid-template-columns:1fr 1fr 1.4fr; gap:10px; border-top:1px solid var(--line); padding-top:14px; }
+.recommendation-strip div { padding-right:8px; }
+
+.chart-wrap { position:relative; min-height:250px; }
+.chart-svg { width:100%; height:auto; overflow:visible; }
+.chart-grid { stroke:#e2e8e2; stroke-width:1; }
+.chart-axis-label { fill:#7b877f; font-size:10px; }
+.chart-line { fill:none; stroke:var(--emerald); stroke-width:2.2; vector-effect:non-scaling-stroke; }
+.chart-line-2 { fill:none; stroke:#6e7c73; stroke-width:1.6; vector-effect:non-scaling-stroke; stroke-dasharray:5 4; }
+.chart-line-actual { fill:none; stroke:var(--ink); stroke-width:1.8; vector-effect:non-scaling-stroke; }
+.chart-area { fill:rgba(44,122,84,.1); }
+.confidence-band { fill:rgba(44,122,84,.12); }
+.chart-tooltip { position:absolute; display:none; pointer-events:none; background:#16251d; color:#f5faf6; padding:10px 12px; border-radius:9px; font-size:.75rem; line-height:1.5; min-width:170px; box-shadow:0 12px 30px rgba(0,0,0,.18); z-index:5; }
+.chart-tooltip .muted { color:#b9c8bf; }
+.legend { display:flex; gap:16px; flex-wrap:wrap; font-size:.75rem; color:var(--muted); }
+.legend span { display:flex; align-items:center; gap:6px; }
+.legend i { width:16px; height:2px; background:var(--emerald); display:inline-block; }
+.legend i.dash { background:linear-gradient(90deg,#77827b 55%,transparent 55%); background-size:6px 2px; }
+.legend i.band { height:8px; background:rgba(44,122,84,.14); }
+
+.tag { display:inline-flex; align-items:center; gap:6px; padding:5px 8px; border-radius:6px; font-size:.72rem; font-weight:700; background:#edf2ee; color:#405047; }
+.tag::before { content:""; width:6px; height:6px; border-radius:50%; background:#7b8e82; }
+.tag.good { background:#e6f1ea; color:#27603f; } .tag.good::before { background:#3d8c61; }
+.tag.warn { background:var(--amber-bg); color:#80540f; } .tag.warn::before { background:#bf8326; }
+.tag.bad { background:var(--danger-bg); color:#8e4038; } .tag.bad::before { background:#b6544a; }
+.tag.demo { background:#edf0e7; color:#5c6846; }
+
+.table-wrap { overflow:auto; }
+table { width:100%; border-collapse:collapse; font-size:.82rem; }
+th { text-align:left; color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.055em; padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap; }
+td { padding:12px; border-bottom:1px solid #edf0ed; white-space:nowrap; font-variant-numeric:tabular-nums; }
+tbody tr:hover { background:#fafbf9; }
+
+.form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
+.field { display:flex; flex-direction:column; gap:7px; }
+.field.full { grid-column:1 / -1; }
+.field label { font-size:.78rem; color:var(--ink-2); font-weight:650; }
+.input, select.input, textarea.input { width:100%; border:1px solid var(--line-strong); background:#fff; color:var(--ink); padding:10px 11px; min-height:42px; border-radius:8px; transition:.15s; }
+.input:focus { border-color:#4f8f6c; outline:3px solid rgba(44,122,84,.09); }
+textarea.input { min-height:100px; resize:vertical; }
+.input-help { color:var(--muted); font-size:.73rem; }
+.form-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+
+.auth-layout { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; }
+.auth-aside { background:var(--forest); color:#fff; padding:60px; display:flex; flex-direction:column; justify-content:space-between; }
+.auth-aside p { color:#c9d9cf; }
+.auth-aside h1 { font-size:3rem; max-width:620px; }
+.auth-main { background:#fafbf8; display:grid; place-items:center; padding:40px; }
+.auth-card { width:min(480px,100%); }
+.auth-card h2 { font-size:2rem; margin-bottom:8px; }
+.auth-card .btn { margin-top:6px; }
+.form-note { font-size:.77rem; background:#f0f4f0; border:1px solid #e0e6e1; padding:10px 12px; border-radius:8px; color:var(--muted); }
+.stepper { display:flex; margin:20px 0 26px; }
+.step { flex:1; position:relative; padding-top:24px; font-size:.7rem; color:var(--muted); text-align:center; }
+.step::before { content:""; width:9px; height:9px; border-radius:50%; background:#c8d1ca; position:absolute; top:5px; left:50%; transform:translateX(-50%); z-index:2; }
+.step::after { content:""; height:1px; background:#d8ded9; position:absolute; left:0; right:0; top:9px; }
+.step:first-child::after { left:50%; } .step:last-child::after { right:50%; }
+.step.active { color:var(--forest); font-weight:700; } .step.active::before { background:var(--emerald); }
+
+.workflow { display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid rgba(255,255,255,.16); }
+.workflow-item { padding:24px 20px 10px 0; border-right:1px solid rgba(255,255,255,.12); min-height:188px; }
+.workflow-item:last-child { border-right:0; }
+.workflow-num { color:#9fd1af; font-size:.75rem; letter-spacing:.1em; }
+.workflow-item h3 { margin:20px 0 9px; color:#fff; }
+.workflow-item p { font-size:.85rem; }
+
+.compare-flow { display:grid; grid-template-columns:1fr 44px 1fr; align-items:center; gap:16px; }
+.compare-box { border-top:2px solid var(--line-strong); padding-top:18px; }
+.compare-box.green { border-color:var(--emerald); }
+.flow-list { margin:20px 0 0; padding:0; list-style:none; }
+.flow-list li { position:relative; padding:11px 0 11px 24px; border-bottom:1px solid var(--line); color:var(--ink-2); }
+.flow-list li::before { content:"↓"; position:absolute; left:0; color:var(--muted); }
+
+.allocation { display:grid; grid-template-columns:1fr 1fr; height:18px; border-radius:4px; overflow:hidden; background:#e7ece7; }
+.allocation .dam { background:var(--emerald); } .allocation .rtm { background:#839488; }
+.allocation-labels { display:flex; justify-content:space-between; margin-top:8px; font-size:.76rem; color:var(--muted); }
+
+.metric-list { display:grid; gap:0; }
+.metric-row { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:11px 0; border-bottom:1px solid var(--line); }
+.metric-row:last-child { border-bottom:0; }
+.metric-row span:first-child { color:var(--muted); font-size:.82rem; }
+.metric-row strong { text-align:right; font-size:.89rem; }
+
+.factor-list { list-style:none; padding:0; margin:0; }
+.factor-list li { padding:8px 0; border-bottom:1px solid var(--line); font-size:.84rem; }
+.factor-plus { color:var(--emerald); font-weight:800; margin-right:7px; }
+.factor-minus { color:var(--amber); font-weight:800; margin-right:7px; }
+
+details.explainer { border-top:1px solid var(--line); margin-top:18px; padding-top:14px; }
+details.explainer summary { cursor:pointer; font-weight:700; font-size:.86rem; }
+
+.modal-backdrop { position:fixed; inset:0; background:rgba(8,18,12,.48); display:grid; place-items:center; z-index:80; padding:20px; }
+.modal { width:min(620px,100%); max-height:90vh; overflow:auto; background:#fff; border-radius:14px; box-shadow:0 30px 80px rgba(0,0,0,.23); border:1px solid #d7ded9; }
+.modal-head { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 20px; border-bottom:1px solid var(--line); }
+.modal-body { padding:20px; }
+.toast-root { position:fixed; right:18px; bottom:18px; z-index:100; display:grid; gap:9px; }
+.toast { min-width:280px; max-width:380px; padding:12px 14px; background:#173d2b; color:#fff; border-radius:9px; box-shadow:0 18px 35px rgba(0,0,0,.18); font-size:.83rem; animation:toastIn .18s ease-out; }
+@keyframes toastIn { from{ transform:translateY(10px); opacity:0; } to{transform:none;opacity:1;} }
+
+.notice { display:flex; gap:12px; align-items:flex-start; padding:13px 14px; border:1px solid var(--line); background:#f8faf8; border-radius:9px; font-size:.8rem; color:var(--ink-2); }
+.notice.warn { background:var(--amber-bg); border-color:#ead7ad; }
+.notice-dot { width:7px; height:7px; margin-top:7px; border-radius:50%; background:var(--emerald); flex:0 0 auto; }
+.notice.warn .notice-dot { background:var(--amber); }
+
+.feature-line { padding:22px 0; border-top:1px solid var(--line); display:grid; grid-template-columns:.8fr 1.2fr; gap:42px; }
+.feature-line h3 { margin:0; }
+.feature-line p { margin:0; }
+.stat-band { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.stat-band > div { padding:24px; border-right:1px solid var(--line); }
+.stat-band > div:last-child { border-right:0; }
+.stat-band strong { display:block; font-size:1.55rem; margin-bottom:5px; }
+
+.progress { height:7px; background:#e8ece8; overflow:hidden; border-radius:4px; }
+.progress > span { display:block; height:100%; background:var(--emerald); }
+.upload-row { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 0; border-bottom:1px solid var(--line); }
+.upload-row:last-child { border-bottom:0; }
+
+.donut { width:140px; height:140px; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--emerald) 0 62%, #819489 62% 92%, #d8dfda 92% 100%); position:relative; }
+.donut::after { content:""; width:86px; height:86px; border-radius:50%; background:#fff; position:absolute; }
+.donut-center { z-index:2; text-align:center; }
+.donut-center strong { display:block; font-size:1.2rem; }
+
+.pricing-card { padding:28px; border-top:3px solid var(--line-strong); }
+.pricing-card.featured { border-color:var(--emerald); background:#fbfdfb; }
+.price { font-size:2.2rem; font-weight:750; letter-spacing:-.04em; margin:18px 0 5px; }
+.clean-list { list-style:none; padding:0; margin:20px 0; }
+.clean-list li { padding:8px 0; color:var(--ink-2); font-size:.88rem; }
+.clean-list li::before { content:"✓"; margin-right:8px; color:var(--emerald); font-weight:800; }
+
+</style>
+  <style>
+/* Inlined from assets/css/responsive.css */
+@media (max-width: 1100px) {
+  .hero-grid, .two-col, .split-heading { gap:38px; }
+  .grid-4, .four-col { grid-template-columns:repeat(2,1fr); }
+  .workflow { grid-template-columns:repeat(3,1fr); }
+  .workflow-item:nth-child(3) { border-right:0; }
+  .auth-aside { padding:44px; }
+}
+
+@media (max-width: 860px) {
+  .container { width:min(100% - 28px, var(--content)); }
+  .nav-links { display:none; }
+  .mobile-menu-btn { display:grid; }
+  .hero { padding-top:54px; }
+  .hero-grid, .two-col, .split-heading, .feature-line { grid-template-columns:1fr; }
+  .hero-grid { gap:45px; }
+  .three-col, .grid-3 { grid-template-columns:1fr; }
+  .app-shell { display:block; }
+  .sidebar { transform:translateX(-100%); transition:.2s ease; box-shadow:20px 0 40px rgba(0,0,0,.12); }
+  .sidebar.open { transform:translateX(0); }
+  .app-main { display:block; }
+  .app-topbar { padding:0 18px; }
+  .app-content { padding:22px 16px 84px; }
+  .mobile-bottom-nav { position:fixed; display:grid; grid-template-columns:repeat(5,1fr); left:0; right:0; bottom:0; height:64px; background:#fff; border-top:1px solid var(--line); z-index:30; }
+  .mobile-bottom-nav a { display:grid; place-items:center; font-size:.68rem; color:var(--muted); }
+  .mobile-bottom-nav a.active { color:var(--forest); font-weight:700; }
+  .desktop-only { display:none !important; }
+  .span-2,.span-3 { grid-column:auto; }
+  .auth-layout { grid-template-columns:1fr; }
+  .auth-aside { display:none; }
+}
+
+@media (max-width: 620px) {
+  h1 { font-size:2.75rem; }
+  h2 { font-size:2.1rem; }
+  .section { padding:66px 0; }
+  .hero-actions .btn { flex:1; }
+  .hero-proof { gap:12px; }
+  .preview-grid, .recommendation-strip { grid-template-columns:1fr 1fr; }
+  .recommendation-strip div:last-child { grid-column:1/-1; }
+  .workflow { grid-template-columns:1fr; }
+  .workflow-item { border-right:0; border-bottom:1px solid rgba(255,255,255,.12); min-height:auto; }
+  .compare-flow { grid-template-columns:1fr; }
+  .compare-flow > div:nth-child(2) { transform:rotate(90deg); justify-self:center; }
+  .four-col,.grid-4,.grid-2 { grid-template-columns:1fr; }
+  .stat-band { grid-template-columns:1fr 1fr; }
+  .stat-band > div:nth-child(2) { border-right:0; }
+  .stat-band > div:nth-child(-n+2) { border-bottom:1px solid var(--line); }
+  .page-head { align-items:flex-start; flex-direction:column; }
+  .page-head .btn { width:100%; }
+  .form-grid { grid-template-columns:1fr; }
+  .field.full { grid-column:auto; }
+  .auth-main { padding:28px 18px; place-items:start center; }
+  .panel-pad { padding:17px; }
+  .kpi { min-height:116px; }
+  .toast-root { left:12px; right:12px; bottom:76px; }
+  .toast { min-width:0; max-width:none; }
+}
+
+</style>
+  <style>
+/* Inlined from assets/css/app-enhanced.css */
+/* GreenWatt authenticated application polish */
+.enhanced-app {
+  --app-bg:#f3f5f2;
+  --app-panel:#ffffff;
+  --app-line:#e1e6e1;
+  --app-text:#18231d;
+  --app-sub:#6b7770;
+  --app-green:#1f6c49;
+  --app-deep:#102b20;
+  background:var(--app-bg);
+}
+.enhanced-app .app-main { background:var(--app-bg); min-height:100vh; }
+.enhanced-app .sidebar {
+  width:264px;
+  padding:18px 14px 16px;
+  background:linear-gradient(180deg,#102d21 0%,#0f291f 100%);
+  border-right:1px solid rgba(255,255,255,.06);
+  box-shadow:none;
+}
+.enhanced-app.app-shell { grid-template-columns:264px 1fr; }
+.enhanced-app .sidebar .brand { padding:3px 8px 15px; }
+.enhanced-app .sidebar .brand-name { color:#f7fbf8; font-size:1.02rem; }
+.enhanced-app .sidebar .brand-mark { width:29px; height:29px; background:#f1f7f3; }
+.enhanced-app .sidebar .brand-mark::after { background:#1d6a48; }
+.sidebar-brand-row { display:flex; align-items:center; justify-content:space-between; }
+.sidebar-close { background:transparent; border:0; color:#b9c9bf; font-size:1.3rem; }
+.workspace-context { display:flex; align-items:center; gap:10px; padding:11px 9px 12px; margin:0 3px 11px; border-top:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
+.workspace-avatar,.company-avatar { display:grid; place-items:center; flex:0 0 auto; border-radius:9px; font-weight:750; letter-spacing:-.03em; }
+.workspace-avatar { width:34px; height:34px; color:#dff2e6; background:#25533e; border:1px solid rgba(255,255,255,.08); font-size:.75rem; }
+.workspace-context strong { display:block; color:#f1f6f3; font-size:.79rem; line-height:1.25; }
+.workspace-context span { display:block; color:#91a89a; font-size:.68rem; margin-top:3px; }
+.enhanced-app .demo-pill { margin:0 4px 16px; padding:7px 9px; border-radius:7px; background:rgba(143,193,161,.08); border:1px solid rgba(149,203,168,.10); color:#a9c9b5; text-transform:none; letter-spacing:0; }
+.enhanced-app .demo-pill span:first-child { display:flex; align-items:center; gap:7px; }
+.enhanced-app .demo-pill span:last-child { font-size:.61rem; letter-spacing:.08em; color:#7fa18c; }
+.live-dot { width:6px; height:6px; border-radius:50%; display:inline-block; background:#78c996; box-shadow:0 0 0 3px rgba(120,201,150,.11); }
+.enhanced-app .sidebar-nav { gap:14px; padding-right:2px; }
+.sidebar-group { display:grid; gap:3px; }
+.sidebar-label { padding:0 10px 5px; color:#728d7d; font-size:.61rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.enhanced-app .sidebar-link { position:relative; min-height:36px; padding:8px 10px; color:#a9bbb0; border-radius:7px; font-size:.79rem; gap:9px; }
+.enhanced-app .sidebar-link:hover { color:#eef6f1; background:rgba(255,255,255,.045); }
+.enhanced-app .sidebar-link.active { color:#f6fbf8; background:#1c4936; box-shadow:inset 0 0 0 1px rgba(255,255,255,.035); font-weight:650; }
+.sidebar-icon { width:19px; height:19px; display:grid; place-items:center; color:#829b8c; }
+.sidebar-link.active .sidebar-icon { color:#bce0c9; }
+.active-rail { position:absolute; left:-14px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0; background:#8acaa1; }
+.enhanced-app .sidebar-bottom { padding:12px 3px 0; border-top:1px solid rgba(255,255,255,.08); }
+.sidebar-market-card { padding:11px; margin-bottom:10px; border-radius:9px; background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.07); }
+.sidebar-market-head,.sidebar-market-meta { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.sidebar-market-head { color:#81998a; font-size:.65rem; margin-bottom:8px; }
+.sidebar-market-card strong { color:#dce9e1; font-size:.76rem; }
+.sidebar-market-meta { margin-top:8px; color:#a8c0b1; font-size:.72rem; font-variant-numeric:tabular-nums; }
+.market-live { display:inline-flex; align-items:center; gap:5px; color:#9ed2b1; }
+.market-live i { width:5px; height:5px; border-radius:50%; background:#74c792; }
+.btn-sidebar { background:#eef5f0; color:#153928; border-color:transparent; }
+.btn-sidebar:hover { background:#fff; }
+.sidebar-overlay { display:none; }
+
+.enhanced-app .app-topbar {
+  height:72px;
+  left:0;
+  background:rgba(248,249,247,.92);
+  border-bottom:1px solid #e0e5e0;
+  padding:0 30px;
+  backdrop-filter:blur(16px);
+}
+.topbar-left { display:flex; align-items:center; gap:12px; min-width:0; }
+.topbar-crumb { display:flex; align-items:center; gap:9px; min-width:0; font-size:.8rem; }
+.topbar-crumb span { color:#8a958e; }
+.topbar-crumb b { color:#bcc4bf; font-weight:400; }
+.topbar-crumb strong { color:#29362f; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.enhanced-app .topbar-actions { gap:8px; }
+.command-trigger { height:38px; min-width:214px; display:flex; align-items:center; gap:8px; padding:0 9px 0 11px; border:1px solid #d9dfda; background:#fff; border-radius:9px; color:#7a867f; cursor:pointer; text-align:left; }
+.command-trigger span { flex:1; font-size:.77rem; }
+.command-trigger kbd { border:1px solid #dde3de; background:#f6f8f6; border-radius:5px; padding:2px 5px; font:600 .62rem ui-monospace,SFMono-Regular,Menlo,monospace; color:#86918a; }
+.enhanced-app .icon-btn { border-color:#dce2dd; background:#fff; color:#34443a; }
+.notification-btn { position:relative; }
+.notification-badge { position:absolute; top:-4px; right:-4px; min-width:16px; height:16px; padding:0 4px; display:grid; place-items:center; border:2px solid #f8f9f7; border-radius:10px; background:#a66d14; color:#fff; font-size:.56rem; font-weight:800; }
+.company-switcher { height:44px; display:flex; align-items:center; gap:9px; padding:4px 8px 4px 5px; border:1px solid #dce2dd; border-radius:10px; background:#fff; cursor:pointer; color:#26362d; }
+.company-avatar { width:34px; height:34px; background:#e6efe9; color:#205b3f; font-size:.7rem; }
+.company-copy { display:grid; text-align:left; line-height:1.12; }
+.company-copy strong { font-size:.72rem; font-weight:700; }
+.company-copy small { font-size:.62rem; color:#849088; margin-top:3px; }
+.company-chevron { color:#8c978f; font-size:.8rem; padding-left:2px; }
+
+.enhanced-app .app-content { padding:28px 30px 72px; max-width:1480px; }
+.enhanced-app .page-head { margin-bottom:22px; align-items:center; }
+.enhanced-app .page-head h1 { font-size:1.76rem; margin-bottom:5px; font-weight:720; letter-spacing:-.04em; }
+.enhanced-app .page-head p { font-size:.83rem; }
+.page-eyebrow { display:none; color:#77867d; font-size:.64rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; margin-bottom:6px; }
+.page-actions { display:flex; align-items:center; gap:9px; }
+
+.enhanced-app .panel { border-color:#dfe5e0; border-radius:12px; box-shadow:0 1px 2px rgba(18,38,27,.025); }
+.enhanced-app .panel-pad { padding:20px; }
+.enhanced-app .soft-panel { border-radius:10px; background:#f6f8f5; border-color:#e5e9e5; }
+.enhanced-app .enhanced-kpi { position:relative; overflow:hidden; min-height:126px; padding:18px; transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease; }
+.enhanced-app .enhanced-kpi:hover { transform:translateY(-2px); border-color:#ced9d1; box-shadow:0 8px 18px rgba(23,61,43,.055); }
+.kpi-top { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+.enhanced-app .kpi-label { margin:0; font-size:.72rem; font-weight:650; color:#717e76; }
+.kpi-icon { width:31px; height:31px; display:grid; place-items:center; border-radius:8px; background:#eef4ef; color:#2f7453; }
+.enhanced-app .kpi-value { margin-top:13px; font-size:1.58rem; }
+.enhanced-app .kpi-change { font-size:.69rem; color:#56816a; margin-top:5px; }
+.enhanced-app .panel-head h3 { font-size:1.03rem; letter-spacing:-.025em; }
+.enhanced-app .panel-head p { font-size:.77rem; }
+.enhanced-app table { font-size:.78rem; }
+.enhanced-app th { background:#fafbfa; font-size:.66rem; }
+.enhanced-app tbody tr:hover { background:#f7faf7; }
+.enhanced-app .btn { border-radius:8px; }
+.enhanced-app .btn-primary { background:#173e2c; }
+.enhanced-app .btn-primary:hover { background:#0f3222; }
+.enhanced-app .btn-secondary { background:#fff; }
+.enhanced-app .tag { border-radius:999px; }
+
+/* Overview specific */
+.overview-hero-head { display:flex; justify-content:space-between; align-items:flex-end; gap:18px; margin-bottom:18px; }
+.overview-greeting .page-eyebrow { display:block; }
+.overview-greeting h1 { font-size:1.82rem; margin:0 0 5px; }
+.overview-greeting p { margin:0; font-size:.82rem; color:#728078; }
+.overview-actions { display:flex; gap:9px; }
+.context-strip { display:grid; grid-template-columns:1.25fr 1fr 1fr 1fr; margin-bottom:18px; background:#173b2b; color:#eef6f1; border-radius:11px; overflow:hidden; border:1px solid #143425; }
+.context-item { min-height:65px; padding:12px 16px; border-right:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:11px; }
+.context-item:last-child { border-right:0; }
+.context-icon { width:31px; height:31px; display:grid; place-items:center; border-radius:8px; color:#bee0c9; background:rgba(255,255,255,.07); }
+.context-copy small { display:block; color:#96af9f; font-size:.62rem; margin-bottom:2px; text-transform:uppercase; letter-spacing:.07em; }
+.context-copy strong { display:block; color:#f7faf8; font-size:.8rem; font-weight:650; }
+.context-copy span { display:block; color:#aac0b2; font-size:.67rem; margin-top:2px; }
+.overview-layout { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(290px,.75fr); gap:18px; margin-top:18px; }
+.overview-stack { display:grid; gap:18px; align-content:start; }
+.chart-toolbar { display:flex; gap:5px; padding:3px; background:#f4f6f4; border:1px solid #e2e7e3; border-radius:8px; }
+.chart-toolbar button { min-height:27px; padding:0 9px; border-radius:6px; background:transparent; color:#77837c; font-size:.67rem; cursor:pointer; }
+.chart-toolbar button.active { background:#fff; color:#244333; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+.forecast-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding-top:14px; margin-top:8px; border-top:1px solid #e7ebe7; }
+.forecast-summary div { min-width:0; }
+.forecast-summary small { display:block; font-size:.64rem; color:#849087; margin-bottom:3px; }
+.forecast-summary strong { font-size:.83rem; }
+.plan-hero { background:#173b2b !important; color:#eef7f1; border-color:#173b2b !important; }
+.plan-hero .panel-head h3,.plan-hero .kpi-value,.plan-hero strong { color:#fff; }
+.plan-hero .panel-head p,.plan-hero small,.plan-hero .metric-row span:first-child { color:#a9c0b1; }
+.plan-hero .metric-row { border-color:rgba(255,255,255,.09); }
+.plan-hero .tag.warn { background:#4f4229; color:#efcf92; }
+.plan-split { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:13px 0 12px; }
+.plan-split-card { padding:12px; border:1px solid rgba(255,255,255,.1); border-radius:9px; background:rgba(255,255,255,.045); }
+.plan-split-card small { display:block; }
+.plan-split-card strong { display:block; font-size:1.35rem; letter-spacing:-.04em; margin:3px 0 1px; }
+.plan-split-card span { color:#9bb3a4; font-size:.66rem; }
+.plan-hero .allocation { background:rgba(255,255,255,.1); }
+.plan-hero .allocation .dam { background:#85c99f; }
+.plan-hero .allocation .rtm { background:#6d8576; }
+.plan-hero .btn { margin-top:15px; background:#f4f8f5; color:#173b2b; }
+.plan-hero .btn:hover { background:#fff; }
+.action-center .action-row { display:flex; gap:11px; align-items:flex-start; padding:12px 0; border-bottom:1px solid #e8ece8; }
+.action-center .action-row:last-child { border-bottom:0; padding-bottom:0; }
+.action-bullet { width:29px; height:29px; flex:0 0 auto; display:grid; place-items:center; border-radius:8px; background:#eef4ef; color:#377554; }
+.action-row-content { min-width:0; flex:1; }
+.action-row-content strong { display:block; font-size:.78rem; }
+.action-row-content span { display:block; color:#7a877f; font-size:.68rem; margin-top:3px; }
+.action-link { color:#2b6b4c; font-size:.68rem; font-weight:700; cursor:pointer; background:transparent; padding:2px 0; }
+.market-mini-list { display:grid; gap:0; }
+.market-mini-row { display:grid; grid-template-columns:58px 1fr 1fr auto; gap:10px; align-items:center; padding:10px 0; border-bottom:1px solid #e9ede9; font-size:.73rem; }
+.market-mini-row:last-child { border-bottom:0; }
+.market-mini-row .time { color:#66746b; font-variant-numeric:tabular-nums; }
+.market-mini-row .price { font-weight:700; }
+.market-mini-row .renew { color:#4c7a60; }
+.status-text { font-size:.65rem; font-weight:700; color:#6f7f75; }
+.status-text.buy { color:#256847; }
+.status-text.wait { color:#9b6a1b; }
+.savings-band { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(260px,.6fr); gap:18px; margin-top:18px; }
+.impact-card { display:flex; flex-direction:column; justify-content:space-between; min-height:250px; background:#edf3ee !important; }
+.impact-number { font-size:2.05rem; font-weight:750; letter-spacing:-.05em; color:#18452f; }
+.impact-meter { height:7px; background:#d9e4dc; border-radius:999px; overflow:hidden; margin:12px 0 8px; }
+.impact-meter span { display:block; width:62%; height:100%; background:#3b7f5b; border-radius:inherit; }
+.quick-links { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:18px; }
+.quick-link { display:flex; align-items:center; gap:10px; padding:12px 13px; background:#fff; border:1px solid #dfe5e0; border-radius:10px; color:#34443a; cursor:pointer; transition:.15s; text-align:left; }
+.quick-link:hover { border-color:#c6d4ca; transform:translateY(-1px); }
+.quick-link .kpi-icon { width:29px; height:29px; }
+.quick-link strong { display:block; font-size:.73rem; }
+.quick-link span { display:block; font-size:.63rem; color:#859087; margin-top:2px; }
+
+/* Command center */
+.command-modal .modal { width:min(660px,100%); border-radius:13px; }
+.command-search { position:relative; }
+.command-search .gw-icon { position:absolute; left:13px; top:12px; color:#819087; }
+.command-search input { padding-left:40px; height:44px; }
+.command-results { margin-top:10px; display:grid; gap:3px; }
+.command-result { width:100%; display:flex; align-items:center; gap:11px; min-height:45px; padding:7px 9px; border-radius:8px; background:transparent; color:#26362d; cursor:pointer; text-align:left; }
+.command-result:hover { background:#f2f5f2; }
+.command-result .command-icon { width:30px; height:30px; display:grid; place-items:center; border-radius:7px; background:#edf3ee; color:#347152; }
+.command-result-copy { flex:1; }
+.command-result-copy strong { display:block; font-size:.76rem; }
+.command-result-copy span { display:block; margin-top:2px; color:#869189; font-size:.64rem; }
+.command-result kbd { color:#9aa39d; font-size:.65rem; }
+
+@media (max-width:1100px){
+  .enhanced-app .desktop-command { display:none; }
+  .context-strip { grid-template-columns:1fr 1fr; }
+  .context-item:nth-child(2) { border-right:0; }
+  .context-item:nth-child(-n+2) { border-bottom:1px solid rgba(255,255,255,.08); }
+  .overview-layout { grid-template-columns:1fr; }
+  .overview-stack { grid-template-columns:1fr 1fr; }
+  .quick-links { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:860px){
+  .enhanced-app.app-shell { display:block; }
+  .enhanced-app .sidebar { width:min(286px,86vw); }
+  .enhanced-app .sidebar.open + .sidebar-overlay { display:block; position:fixed; inset:0; z-index:34; background:rgba(7,18,12,.42); backdrop-filter:blur(2px); }
+  .enhanced-app .app-topbar { height:64px; padding:0 14px; }
+  .topbar-crumb span,.topbar-crumb b { display:none; }
+  .company-copy,.company-chevron { display:none; }
+  .company-switcher { width:42px; padding:3px; }
+  .company-avatar { width:34px; height:34px; }
+  .enhanced-app .app-content { padding:19px 14px 86px; }
+  .overview-hero-head { align-items:flex-start; }
+  .overview-greeting h1 { font-size:1.55rem; }
+  .overview-actions .btn-secondary { display:none; }
+  .savings-band { grid-template-columns:1fr; }
+}
+@media (max-width:620px){
+  .context-strip { grid-template-columns:1fr; }
+  .context-item { min-height:56px; border-right:0; border-bottom:1px solid rgba(255,255,255,.08); }
+  .context-item:last-child { border-bottom:0; }
+  .overview-stack { grid-template-columns:1fr; }
+  .overview-hero-head { display:block; }
+  .overview-actions { margin-top:14px; }
+  .overview-actions .btn { width:100%; }
+  .forecast-summary { grid-template-columns:1fr 1fr; }
+  .forecast-summary div:last-child { grid-column:1/-1; }
+  .quick-links { grid-template-columns:1fr; }
+  .market-mini-row { grid-template-columns:52px 1fr auto; }
+  .market-mini-row .renew { display:none; }
+  .enhanced-app .mobile-bottom-nav a { gap:2px; align-content:center; }
+  .enhanced-app .mobile-bottom-nav a span { font-size:.61rem; }
+}
+
+</style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  <div id="modal-root"></div>
+
+  <script>
+/* Inlined from assets/js/data.js */
+window.GreenWatt = window.GreenWatt || {};
+(function (GW) {
+  const blockCount = 96;
+  const blocks = Array.from({ length: blockCount }, (_, i) => {
+    const minutes = i * 15;
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    const time = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+    const daylight = Math.max(0, Math.sin(((h + m/60) - 6.2) / 12.2 * Math.PI));
+    const evening = Math.exp(-Math.pow((h + m/60 - 19.2)/2.4, 2));
+    const morning = Math.exp(-Math.pow((h + m/60 - 9.4)/2.8, 2));
+    const renewable = Math.round(22 + daylight * 61 - evening * 6);
+    const demand = +(34 + morning*33 + daylight*29 + evening*46).toFixed(1);
+    const median = +(5.55 + evening*2.0 + morning*.7 - daylight*2.05 + Math.sin(i*.37)*.09).toFixed(2);
+    const spread = +(0.32 + evening*.28 + (1-daylight)*.1).toFixed(2);
+    const lower = +(median-spread).toFixed(2);
+    const upper = +(median+spread).toFixed(2);
+    const actual = i < 46 ? +(median + Math.sin(i*.61)*.12 - .04).toFixed(2) : null;
+    return { i, time, median, lower, upper, actual, renewable, demand };
+  });
+
+  const totalDemand = 800;
+  const damShare = 65;
+  const rtmShare = 35;
+  const damMWh = totalDemand * damShare / 100;
+  const rtmMWh = totalDemand * rtmShare / 100;
+  const estimatedCost = 3200000;
+  const discomCost = 4000000;
+
+  GW.data = {
+    company: {
+      name: 'ABC Manufacturing Pvt. Ltd.', short: 'ABC Manufacturing', gstin: '24AABCA1234F1Z5',
+      state: 'Gujarat', city: 'Ahmedabad', discom: 'Torrent Power', businessType: 'Manufacturing',
+      buildingType: 'Factory', sanctionedLoad: '5.0 MW', contractedDemand: '4.4 MW',
+      monthlyConsumption: '24,000 MWh', monthlyBill: '₹12.1 Cr', dailyDemand: totalDemand,
+      contact: 'Aarav Mehta', phone: '+91 98765 43210', address: 'Sanand Industrial Estate, Ahmedabad, Gujarat'
+    },
+    procurement: {
+      totalDemand, damShare, rtmShare, damMWh, rtmMWh, estimatedCost, discomCost,
+      savings: discomCost-estimatedCost, renewableShare: 62, risk: 'Moderate', ceiling: 4.50,
+      avgPrice: estimatedCost/(totalDemand*1000), discomPrice: discomCost/(totalDemand*1000)
+    },
+    today: { cost: 3080000, savings: 742000, renewable: 58, co2: 324600 },
+    weather: { temp: 36, wind: 14, solar: 820, condition: 'Clear / high solar potential' },
+    blocks,
+    monthlySavings: [52,56,61,59,65,68,71,73,76,78,80,82],
+    dailySavings: Array.from({length:30},(_,i)=> 18 + Math.round(7*Math.sin(i*.55)+i*.22)),
+    training: { priceMape: 12.8, direction:84.2, loadMape:8.6, lastTraining:'24 Aug 2026', samples:'1.42M blocks', validation:'May–Aug 2026' },
+    notifications: [
+      {title:"Tomorrow's procurement plan is ready.", time:'8 min ago'},
+      {title:'DAM recommendation updated.', time:'42 min ago'},
+      {title:'Monthly savings report is available.', time:'Yesterday'}
+    ],
+    trades: [
+      ['09 Sep 2026','10:00','DAM','86.0 MWh','₹3.81','Accepted','₹82,400','74%'],
+      ['09 Sep 2026','14:15','RTM','28.0 MWh','₹3.96','Cleared','₹21,700','70%'],
+      ['09 Sep 2026','19:00','RTM','18.0 MWh','₹6.28','Skipped','₹0','24%'],
+      ['08 Sep 2026','11:30','DAM','91.0 MWh','₹3.68','Accepted','₹91,600','81%'],
+      ['08 Sep 2026','20:00','DISCOM','11.5 MWh','₹5.00','Fallback','₹0','20%'],
+      ['07 Sep 2026','13:15','DAM','88.0 MWh','₹3.59','Accepted','₹96,300','79%']
+    ]
+  };
+})(window.GreenWatt);
+
+</script>
+  <script>
+/* Inlined from assets/js/utils.js */
+window.GreenWatt = window.GreenWatt || {};
+(function (GW) {
+  const state = {
+    authenticated: localStorage.getItem('gw_auth') === '1',
+    registerStep: 1,
+    kycDocs: {},
+    optimizer: { demand: 800, ceiling: 4.5, risk: 'Moderate', renewable: 'High' },
+    sidebarOpen: false
+  };
+  GW.state = state;
+
+  GW.formatINR = (n) => new Intl.NumberFormat('en-IN', { style:'currency', currency:'INR', maximumFractionDigits:0 }).format(n);
+  GW.formatNum = (n, digits=0) => new Intl.NumberFormat('en-IN', { maximumFractionDigits:digits }).format(n);
+  GW.go = (route) => { location.hash = route; };
+  GW.escape = (s='') => String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  GW.toast = (message) => {
+    const root = document.getElementById('toast-root');
+    if (!root) return;
+    const el = document.createElement('div'); el.className='toast'; el.textContent=message; root.appendChild(el);
+    setTimeout(()=>el.remove(), 3200);
+  };
+  GW.openModal = (title, body) => {
+    const root = document.getElementById('modal-root');
+    root.innerHTML = `<div class="modal-backdrop" data-modal-close="1"><div class="modal" role="dialog" aria-modal="true"><div class="modal-head"><strong>${title}</strong><button class="icon-btn" data-modal-close="1">×</button></div><div class="modal-body">${body}</div></div></div>`;
+  };
+  GW.closeModal = () => { document.getElementById('modal-root').innerHTML=''; };
+  GW.downloadCSV = (rows, filename='greenwatt-export.csv') => {
+    const csv = rows.map(r => r.map(v => `"${String(v).replaceAll('"','""')}"`).join(',')).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download=filename; a.click(); URL.revokeObjectURL(a.href);
+  };
+  GW.slugTitle = (route) => ({
+    overview:'Overview', forecast:'Market Forecast', renewable:'Weather & Renewable', load:'Load Forecast', procurement:'Procurement Planner', optimizer:'Optimizer', market:'Live Market', trades:'Trade History', reports:'Savings & Reports', performance:'Forecast Performance', profile:'Company Profile', kyc:'KYC & Verification', settings:'Settings'
+  }[route] || 'GreenWatt');
+})(window.GreenWatt);
+
+</script>
+  <script>
+/* Inlined from assets/js/charts.js */
+window.GreenWatt = window.GreenWatt || {};
+(function (GW) {
+  function scalePoints(values, w, h, pad, minOverride, maxOverride) {
+    const vals = values.filter(v=>v!=null);
+    const min = minOverride ?? Math.min(...vals);
+    const max = maxOverride ?? Math.max(...vals);
+    const x = (i) => pad.l + i * (w-pad.l-pad.r)/(values.length-1);
+    const y = (v) => pad.t + (max-v) * (h-pad.t-pad.b)/(max-min || 1);
+    return {min,max,x,y, pts: values.map((v,i)=>v==null?null:[x(i),y(v)])};
+  }
+  const path = pts => pts.filter(Boolean).map((p,i)=>`${i===0?'M':'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+
+  GW.priceChart = function(id, compact=false) {
+    const data=GW.data.blocks, w=compact?640:960, h=compact?245:330, pad={l:45,r:14,t:20,b:30};
+    const med=data.map(d=>d.median), low=data.map(d=>d.lower), up=data.map(d=>d.upper), actual=data.map(d=>d.actual);
+    const all=[...low,...up], min=Math.floor(Math.min(...all)-.2), max=Math.ceil(Math.max(...all)+.2);
+    const S=scalePoints(med,w,h,pad,min,max), L=scalePoints(low,w,h,pad,min,max), U=scalePoints(up,w,h,pad,min,max), A=scalePoints(actual,w,h,pad,min,max);
+    const band=`${path(U.pts)} ${L.pts.filter(Boolean).reverse().map(p=>`L${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ')} Z`;
+    const yTicks=[min,(min+max)/2,max];
+    const xTicks=[0,24,48,72,95];
+    return `<div class="chart-wrap" id="${id}"><svg class="chart-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="Electricity price forecast chart">
+      ${yTicks.map(v=>`<line class="chart-grid" x1="${pad.l}" x2="${w-pad.r}" y1="${S.y(v)}" y2="${S.y(v)}"/><text class="chart-axis-label" x="2" y="${S.y(v)+4}">₹${v.toFixed(1)}</text>`).join('')}
+      ${xTicks.map(i=>`<text class="chart-axis-label" x="${S.x(i)-11}" y="${h-8}">${data[i].time}</text>`).join('')}
+      <path class="confidence-band" d="${band}"/><path class="chart-line" d="${path(S.pts)}"/>
+      ${compact?'':`<path class="chart-line-actual" d="${path(A.pts)}"/>`}
+      <rect data-chart-hit="price" x="${pad.l}" y="${pad.t}" width="${w-pad.l-pad.r}" height="${h-pad.t-pad.b}" fill="transparent" />
+      </svg><div class="chart-tooltip"></div></div>`;
+  };
+
+  GW.lineChart = function(id, values, labels, unit='₹ lakh', area=true) {
+    const w=760,h=250,pad={l:42,r:12,t:18,b:28}; const S=scalePoints(values,w,h,pad);
+    const baseY=h-pad.b; const areaPath=`${path(S.pts)} L${S.pts.at(-1)[0]},${baseY} L${S.pts[0][0]},${baseY} Z`;
+    const ticks=[0,Math.floor((values.length-1)/2),values.length-1];
+    return `<div class="chart-wrap" id="${id}"><svg class="chart-svg" viewBox="0 0 ${w} ${h}">
+      ${[S.min,(S.min+S.max)/2,S.max].map(v=>`<line class="chart-grid" x1="${pad.l}" x2="${w-pad.r}" y1="${S.y(v)}" y2="${S.y(v)}"/><text class="chart-axis-label" x="1" y="${S.y(v)+4}">${Math.round(v)}</text>`).join('')}
+      ${area?`<path class="chart-area" d="${areaPath}"/>`:''}<path class="chart-line" d="${path(S.pts)}"/>
+      ${ticks.map(i=>`<text class="chart-axis-label" x="${S.x(i)-7}" y="${h-8}">${labels[i]}</text>`).join('')}
+      </svg></div>`;
+  };
+
+  GW.barChart = function(values, labels) {
+    const max=Math.max(...values), w=760,h=250,p={l:34,r:10,t:18,b:30}; const chartW=w-p.l-p.r, bw=chartW/values.length*.58, gap=chartW/values.length;
+    return `<svg class="chart-svg" viewBox="0 0 ${w} ${h}">${[0,.5,1].map(t=>{const y=p.t+(h-p.t-p.b)*(1-t);return `<line class="chart-grid" x1="${p.l}" x2="${w-p.r}" y1="${y}" y2="${y}"/>`;}).join('')}
+      ${values.map((v,i)=>{const bh=(h-p.t-p.b)*v/max, x=p.l+i*gap+(gap-bw)/2,y=h-p.b-bh; return `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="3" fill="#2c7a54" opacity="${.62+i/values.length*.28}"/>${i%2===0?`<text class="chart-axis-label" x="${x}" y="${h-10}">${labels[i]}</text>`:''}`}).join('')}</svg>`;
+  };
+
+  GW.bindChartInteractions = function(){
+    document.querySelectorAll('[data-chart-hit="price"]').forEach(hit=>{
+      hit.addEventListener('mousemove', e=>{
+        const svg=e.currentTarget.ownerSVGElement, box=svg.getBoundingClientRect(), x=(e.clientX-box.left)/box.width*svg.viewBox.baseVal.width;
+        const padL=45, usable=svg.viewBox.baseVal.width-padL-14; let i=Math.round((x-padL)/usable*95); i=Math.max(0,Math.min(95,i));
+        const d=GW.data.blocks[i], wrap=svg.closest('.chart-wrap'), tip=wrap.querySelector('.chart-tooltip');
+        tip.innerHTML=`<strong>${d.time}</strong><br>Predicted: ₹${d.median.toFixed(2)}/unit<br><span class="muted">Range ₹${d.lower.toFixed(2)}–₹${d.upper.toFixed(2)}</span><br>Renewable: ${d.renewable}% · Demand: ${d.demand} MWh`;
+        tip.style.display='block'; tip.style.left=Math.min(e.offsetX+12, wrap.clientWidth-190)+'px'; tip.style.top=Math.max(8,e.offsetY-78)+'px';
+      });
+      hit.addEventListener('mouseleave', e=>{ e.currentTarget.ownerSVGElement.closest('.chart-wrap').querySelector('.chart-tooltip').style.display='none'; });
+    });
+  };
+})(window.GreenWatt);
+
+</script>
+  <script>
+/* Inlined from assets/js/components/common.js */
+window.GreenWatt = window.GreenWatt || {};
+(function (GW) {
+  const icon = (name, size=18) => {
+    const paths = {
+      overview:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+      forecast:'<path d="M3 18l4.2-5.1 3.7 2.8 5-7.1L21 4"/><path d="M18 4h3v3"/>',
+      renewable:'<circle cx="12" cy="12" r="3.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>',
+      load:'<path d="M3 16c2.2 0 2.2-8 4.5-8s2.3 10 4.6 10 2.3-13 4.6-13S19 14 21 14"/>',
+      procurement:'<path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+      optimizer:'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M8.5 12h7M12 8.5v7"/>',
+      market:'<circle cx="12" cy="12" r="8"/><path d="M7 14l3-3 2 2 5-5"/>',
+      trades:'<path d="M4 7h13l-3-3M20 17H7l3 3"/>',
+      reports:'<path d="M5 3h11l3 3v15H5z"/><path d="M8 16v-4M12 16V8M16 16v-6"/>',
+      performance:'<path d="M4 18V6M4 18h16"/><path d="M7 14l3-3 3 2 5-6"/>',
+      profile:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.9-4 3.3-6 7-6s6.1 2 7 6"/>',
+      kyc:'<path d="M12 3l7 3v5c0 4.5-2.8 8-7 10-4.2-2-7-5.5-7-10V6l7-3z"/><path d="M8.7 12l2 2 4.6-5"/>',
+      settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.86 2.86-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06L3.8 16.94l.06-.06A1.7 1.7 0 0 0 4.2 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H2.4v-4h.1A1.7 1.7 0 0 0 4.2 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06L6.66 3.8l.06.06A1.7 1.7 0 0 0 8.6 4.2a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V2.4h4v.1A1.7 1.7 0 0 0 15 4.2a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.86 2.86-.06.06A1.7 1.7 0 0 0 19.4 8.6a1.7 1.7 0 0 0 .6 1 1.7 1.7 0 0 0 1.1.4h.1v4h-.1a1.7 1.7 0 0 0-1.7 1z"/>',
+      search:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/>',
+      bell:'<path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>',
+      menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+      arrow:'<path d="M5 12h14M14 7l5 5-5 5"/>',
+      play:'<path d="M8 5l11 7-11 7z"/>',
+      lightning:'<path d="M13 2L5 14h6l-1 8 9-13h-6z"/>',
+      calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>',
+      clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+      leaf:'<path d="M20 4C12 4 6 7.5 6 13c0 3.5 2.5 6 6 6 6 0 8-8 8-15z"/><path d="M4 21c2-5 6-8 12-11"/>'
+    };
+    return `<svg class="gw-icon" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||'<circle cx="12" cy="12" r="2"/>'}</svg>`;
+  };
+
+  GW.components = {};
+  GW.components.icon = icon;
+  GW.components.brand = () => `<a href="#/" class="brand"><span class="brand-mark"></span><span class="brand-name">GreenWatt</span></a>`;
+  GW.components.publicHeader = () => `<header class="public-header"><div class="container public-nav">${GW.components.brand()}<nav class="nav-links"><a href="#/how">How it works</a><a href="#/solutions">Solutions</a><a href="#/pricing">Pricing</a><a href="#/contact">Contact</a></nav><div class="nav-actions"><a class="btn btn-ghost desktop-only" href="#/login">Sign in</a><a class="btn btn-primary" href="#/register">Get started</a><button class="icon-btn mobile-menu-btn" data-mobile-public-menu aria-label="Open menu">${icon('menu')}</button></div></div></header>`;
+  GW.components.publicShell = content => `<div class="public-shell">${GW.components.publicHeader()}${content}<footer class="section-sm"><div class="container"><div class="feature-line"><div>${GW.components.brand()}</div><div><p>Electricity procurement intelligence for commercial India. Demo data is simulated and does not represent live exchange execution.</p><div class="small">© 2026 GreenWatt · Built for decision support, planning and simulation.</div></div></div></div></footer></div>`;
+
+  const groups = [
+    ['Workspace', [['overview','Overview'],['procurement','Procurement Planner'],['market','Live Market'],['trades','Trade History']]],
+    ['Intelligence', [['forecast','Market Forecast'],['renewable','Weather & Renewable'],['load','Load Forecast'],['optimizer','Optimizer'],['performance','Forecast Performance']]],
+    ['Reporting', [['reports','Savings & Reports']]],
+    ['Company', [['profile','Company Profile'],['kyc','KYC & Verification'],['settings','Settings']]]
+  ];
+
+  GW.components.sidebar = active => `<aside class="sidebar ${GW.state.sidebarOpen?'open':''}" id="sidebar">
+    <div class="sidebar-brand-row"><a href="#/app/overview" class="brand"><span class="brand-mark"></span><span class="brand-name">GreenWatt</span></a><button class="sidebar-close mobile-menu-btn" data-sidebar-toggle aria-label="Close menu">×</button></div>
+    <div class="workspace-context"><div class="workspace-avatar">AM</div><div><strong>ABC Manufacturing</strong><span>Gujarat · Commercial</span></div></div>
+    <div class="demo-pill"><span><i class="live-dot"></i> Simulation workspace</span><span>DEMO</span></div>
+    <nav class="sidebar-nav">${groups.map(([label,items])=>`<div class="sidebar-group"><div class="sidebar-label">${label}</div>${items.map(([r,label])=>`<a class="sidebar-link ${active===r?'active':''}" href="#/app/${r}"><span class="sidebar-icon">${icon(r,17)}</span><span>${label}</span>${active===r?'<i class="active-rail"></i>':''}</a>`).join('')}</div>`).join('')}</nav>
+    <div class="sidebar-bottom"><div class="sidebar-market-card"><div class="sidebar-market-head"><span>Market status</span><span class="market-live"><i></i> Open</span></div><strong>RTM · Next session</strong><div class="sidebar-market-meta"><span>₹4.18/unit</span><span>14m</span></div></div><button class="btn btn-sidebar btn-block btn-sm" data-run-simulation>${icon('play',15)} Run Simulation</button></div>
+  </aside><button class="sidebar-overlay" data-sidebar-toggle aria-label="Close navigation"></button>`;
+
+  GW.components.topbar = active => `<div class="app-topbar">
+    <div class="topbar-left"><button class="icon-btn mobile-menu-btn" data-sidebar-toggle aria-label="Open menu">${icon('menu')}</button><div class="topbar-crumb"><span>GreenWatt</span><b>/</b><strong>${GW.slugTitle(active)}</strong></div></div>
+    <div class="topbar-actions">
+      <button class="command-trigger desktop-command" data-command-palette>${icon('search',16)}<span>Search workspace</span><kbd>⌘ K</kbd></button>
+      <button class="icon-btn notification-btn" data-notifications title="Notifications" aria-label="Notifications">${icon('bell')}<span class="notification-badge">3</span></button>
+      <button class="company-switcher" data-company-menu><span class="company-avatar">AM</span><span class="company-copy"><strong>ABC Manufacturing</strong><small>Admin workspace</small></span><span class="company-chevron">⌄</span></button>
+    </div>
+  </div>`;
+
+  GW.components.mobileNav = active => `<nav class="mobile-bottom-nav"><a class="${active==='overview'?'active':''}" href="#/app/overview">${icon('overview',18)}<span>Overview</span></a><a class="${active==='forecast'?'active':''}" href="#/app/forecast">${icon('forecast',18)}<span>Forecast</span></a><a class="${active==='procurement'?'active':''}" href="#/app/procurement">${icon('procurement',18)}<span>Plan</span></a><a class="${active==='market'?'active':''}" href="#/app/market">${icon('market',18)}<span>Market</span></a><a class="${active==='reports'?'active':''}" href="#/app/reports">${icon('reports',18)}<span>Reports</span></a></nav>`;
+  GW.components.appShell = (active,content) => `<div class="app-shell enhanced-app">${GW.components.sidebar(active)}<main class="app-main">${GW.components.topbar(active)}<div class="app-content">${content}</div>${GW.components.mobileNav(active)}</main></div>`;
+  GW.components.pageHead = (title, desc, action='') => `<div class="page-head"><div><div class="page-eyebrow">Workspace</div><h1>${title}</h1><p class="muted">${desc}</p></div>${action?`<div class="page-actions">${action}</div>`:''}</div>`;
+  GW.components.kpi = (label,value,change='',cls='') => {
+    const map = {"Today's electricity cost":'lightning','Savings vs DISCOM':'reports','Renewable share':'leaf','CO₂ avoided':'renewable','Temperature':'renewable','Wind speed':'market','Solar irradiance':'renewable','Renewable availability':'leaf'};
+    return `<div class="panel kpi enhanced-kpi"><div class="kpi-top"><div class="kpi-label">${label}</div><span class="kpi-icon">${icon(map[label]||'performance',17)}</span></div><div class="kpi-value ${cls}">${value}</div>${change?`<div class="kpi-change">${change}</div>`:''}</div>`;
+  };
+  GW.components.metricList = rows => `<div class="metric-list">${rows.map(r=>`<div class="metric-row"><span>${r[0]}</span><strong>${r[1]}</strong></div>`).join('')}</div>`;
+})(window.GreenWatt);
+
+</script>
+  <script>
+/* Inlined from assets/js/pages/public.js */
+window.GreenWatt = window.GreenWatt || {};
+(function (GW) {
+  const C=GW.components;
+  GW.publicPages = {};
+  GW.publicPages.home = () => C.publicShell(`
+    <section class="hero"><div class="container hero-grid"><div class="hero-copy"><div class="eyebrow">Electricity procurement intelligence · India</div><h1>Buy electricity smarter.</h1><p class="lede">GreenWatt forecasts market prices, electricity demand and renewable availability to help commercial businesses plan when and how much power to procure.</p><div class="hero-actions"><a class="btn btn-primary" href="#/register">Get Started</a><button class="btn btn-secondary" data-view-demo>View Demo</button></div><div class="hero-proof"><span><i class="proof-dot"></i>DAM + RTM planning</span><span><i class="proof-dot"></i>96-block forecasting</span><span><i class="proof-dot"></i>Simulation-ready</span></div></div><div class="hero-panel"><div class="dashboard-preview"><div class="preview-top"><div><strong>Tomorrow's market outlook</strong><div class="small">11 Sep 2026 · Gujarat</div></div><span class="tag demo">Demo</span></div><div class="preview-grid"><div class="preview-metric"><small>Expected demand</small><strong>800 MWh</strong></div><div class="preview-metric"><small>Renewable share</small><strong>62%</strong></div><div class="preview-metric"><small>Est. savings</small><strong>₹8.0L</strong></div></div>${GW.priceChart('hero-price',true)}<div class="recommendation-strip"><div><small>DAM</small><strong>65%</strong></div><div><small>RTM</small><strong>35%</strong></div><div><small>Plan</small><strong>Moderate risk · ₹4.50 ceiling</strong></div></div></div></div></div></section>
+    <section class="section"><div class="container"><div class="split-heading"><div><div class="eyebrow">The procurement problem</div><h2>Electricity prices don't stay still. Your strategy shouldn't either.</h2></div><div><p class="lede">Market prices, building demand and renewable availability move throughout the day. GreenWatt turns those moving inputs into a procurement plan your team can review and measure.</p></div></div><div class="compare-flow"><div class="compare-box"><h3>Traditional procurement</h3><ul class="flow-list"><li>Fixed / less optimized</li><li>Limited market intelligence</li><li>Higher procurement cost</li></ul></div><div style="font-size:1.5rem;color:var(--muted)">→</div><div class="compare-box green"><h3>GreenWatt</h3><ul class="flow-list"><li>Forecast</li><li>Optimize</li><li>Procure</li><li>Measure savings</li></ul></div></div></div></section>
+    <section class="section dark-section"><div class="container"><div class="eyebrow">How GreenWatt works</div><h2 style="max-width:760px">From business verification to measured procurement performance.</h2><div class="workflow">${[['01','Register','Create the company account and capture electricity data.'],['02','Verify','Complete KYC and eligibility verification.'],['03','Forecast','Estimate prices, load and renewable availability.'],['04','Optimize','Calculate a DAM / RTM mix within risk and price constraints.'],['05','Execute','Simulate approved plans; integrate licensed partners later.'],['06','Measure','Track cost, savings, renewable share and CO₂ avoided.']].map(x=>`<div class="workflow-item"><span class="workflow-num">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p></div>`).join('')}</div></div></section>
+    <section class="section"><div class="container"><div class="split-heading"><div><div class="eyebrow">Tomorrow's Market Outlook</div><h2>Weather belongs in the procurement conversation.</h2></div><div><p class="lede">Renewable availability is expected to influence market conditions. GreenWatt combines weather forecasts with demand and market history without treating any one relationship as guaranteed.</p></div></div><div class="stat-band"><div><small>Temperature</small><strong>36°C</strong></div><div><small>Wind</small><strong>14 km/h</strong></div><div><small>Solar irradiance</small><strong>820 W/m²</strong></div><div><small>Renewable availability</small><strong>High</strong></div></div><div class="feature-line"><h3>High solar availability → higher renewable generation → potentially lower market prices</h3><p>This is presented as an input to market conditions, not a deterministic promise. Forecast ranges remain visible throughout the product.</p></div></div></section>
+    <section class="section-sm"><div class="container"><div class="panel panel-pad" style="background:var(--forest);color:#fff;border-color:var(--forest);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap"><div><div class="eyebrow">Ready to explore</div><h2 style="font-size:2.2rem;margin:7px 0 0">Plan tomorrow's power with more context.</h2></div><a href="#/register" class="btn btn-secondary">Register your company</a></div></div></section>`);
+
+  GW.publicPages.how = () => C.publicShell(`<section class="section"><div class="container"><div class="eyebrow">How it works</div><h1 style="font-size:4rem;max-width:900px">Forecast. Optimize. Procure. Measure.</h1><p class="lede">GreenWatt separates prediction from optimization so teams can see what the models estimate and what the procurement engine recommends.</p><div class="section-sm">${[['Forecasting layer','XGBoost estimates DAM price ranges. LightGBM estimates building load. Weather + grid history estimate renewable share.'],['Optimization layer','A linear-programming engine balances DAM and RTM subject to demand, ceiling price, risk tolerance and renewable priority.'],['Execution layer','Plans can be simulated with historical/demo data. Production execution would connect through an eligible licensed trading partner.'],['Measurement layer','Compare GreenWatt procurement cost with a configured DISCOM benchmark and report renewable share and configurable CO₂ methodology.']].map(x=>`<div class="feature-line"><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join('')}</div></div></section>`);
+  GW.publicPages.solutions = () => C.publicShell(`<section class="section"><div class="container"><div class="eyebrow">Solutions</div><h1 style="font-size:4rem;max-width:920px">Electricity procurement intelligence for high-consumption businesses.</h1><p class="lede">Built for factories, offices, malls, warehouses, institutions and other commercial consumers evaluating more disciplined power procurement.</p><div class="section-sm three-col">${[['Factories','Load-aware procurement planning for variable production schedules.'],['Commercial campuses','Plan around HVAC-driven peaks, tariff exposure and renewable windows.'],['Warehouses & malls','See block-level demand, price uncertainty and procurement flexibility.']].map(x=>`<div class="panel panel-pad"><h3>${x[0]}</h3><p>${x[1]}</p><a class="btn btn-secondary btn-sm" href="#/register">Explore →</a></div>`).join('')}</div></div></section>`);
+  GW.publicPages.pricing = () => C.publicShell(`<section class="section"><div class="container"><div class="eyebrow">Pricing / Demo</div><h1 style="font-size:4rem;max-width:780px">Start with a procurement assessment.</h1><p class="lede">Prototype pricing is illustrative. Enterprise pricing depends on consumption, data integrations, sites and execution scope.</p><div class="section-sm three-col"><div class="panel pricing-card"><h3>Demo</h3><div class="price">₹0</div><div class="small">Prototype access</div><ul class="clean-list"><li>Coherent simulated company</li><li>Forecast dashboards</li><li>Optimizer interaction</li><li>Trade simulation</li></ul><button class="btn btn-secondary btn-block" data-view-demo>Open demo</button></div><div class="panel pricing-card featured"><h3>Pilot</h3><div class="price">Custom</div><div class="small">For one site / procurement team</div><ul class="clean-list"><li>Data onboarding</li><li>Company-specific forecasts</li><li>Procurement workflows</li><li>Reporting setup</li></ul><a class="btn btn-primary btn-block" href="#/contact">Request pilot</a></div><div class="panel pricing-card"><h3>Enterprise</h3><div class="price">Custom</div><div class="small">Multi-site / integration scope</div><ul class="clean-list"><li>Company data isolation</li><li>Role-based access</li><li>Custom integrations</li><li>Governance & support</li></ul><a class="btn btn-secondary btn-block" href="#/contact">Talk to us</a></div></div></div></section>`);
+  GW.publicPages.contact = () => C.publicShell(`<section class="section"><div class="container two-col"><div><div class="eyebrow">Contact</div><h1 style="font-size:4rem">Talk to GreenWatt.</h1><p class="lede">Tell us about your site, electricity consumption and procurement goals.</p></div><form class="panel panel-pad" id="contact-form"><div class="form-grid"><div class="field"><label>Name</label><input class="input" required name="name"></div><div class="field"><label>Company</label><input class="input" required name="company"></div><div class="field full"><label>Business email</label><input class="input" type="email" required name="email"></div><div class="field full"><label>What are you trying to improve?</label><textarea class="input" required name="message"></textarea></div></div><div class="form-actions"><button class="btn btn-primary">Send enquiry</button></div></form></div></section>`);
+})(window.GreenWatt);
+
+</script>
+  <script>
+/* Inlined from assets/js/pages/auth.js */
+window.GreenWatt = window.GreenWatt || {};
+(function(GW){
+  const C=GW.components;
+  const aside = `<aside class="auth-aside"><div>${C.brand()}</div><div><div class="eyebrow">Commercial electricity procurement</div><h1>Forecast the market. Optimize every unit. Buy smarter.</h1><p>Decision support for commercial electricity consumers in India.</p></div><div class="small" style="color:#b8cbbf">Demo environment · No live electricity-market trades</div></aside>`;
+  GW.authPages={};
+  GW.authPages.login=()=>`<div class="auth-layout">${aside}<main class="auth-main"><div class="auth-card"><a href="#/" class="small">← Back to website</a><h2 style="margin-top:22px">Sign in</h2><p>Use your company account to access forecasts and procurement plans.</p><form id="login-form"><div class="field"><label>Business email</label><input class="input" type="email" name="email" value="demo@greenwatt.in" required></div><div class="field" style="margin-top:14px"><label>Password</label><input class="input" type="password" name="password" value="demo123" minlength="6" required></div><div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 16px;font-size:.8rem"><label><input type="checkbox" checked> Remember me</label><button type="button" class="btn btn-ghost btn-sm" data-forgot-password>Forgot password?</button></div><button class="btn btn-primary btn-block">Sign In</button><p class="small" style="text-align:center;margin-top:18px">Don't have a company account? <a href="#/register" style="color:var(--emerald);font-weight:700">Register your company</a></p></form></div></main></div>`;
+
+  function registerFields(step){
+    if(step===1) return `<div class="form-grid"><div class="field full"><label>Company email</label><input class="input" type="email" required value="procurement@abcmfg.in"></div><div class="field"><label>Password</label><input class="input" type="password" minlength="6" required value="demo123"></div><div class="field"><label>Confirm password</label><input class="input" type="password" minlength="6" required value="demo123"></div></div>`;
+    if(step===2) return `<div class="form-grid"><div class="field"><label>Company name</label><input class="input" required value="ABC Manufacturing Pvt. Ltd."></div><div class="field"><label>GSTIN</label><input class="input" required value="24AABCA1234F1Z5"></div><div class="field"><label>Business type</label><select class="input"><option>Manufacturing</option><option>Commercial</option><option>Institution</option></select></div><div class="field"><label>State</label><select class="input"><option>Gujarat</option><option>Maharashtra</option><option>Karnataka</option></select></div><div class="field"><label>City</label><input class="input" value="Ahmedabad"></div><div class="field"><label>DISCOM</label><input class="input" value="Torrent Power"></div><div class="field"><label>Contact person</label><input class="input" value="Aarav Mehta"></div><div class="field"><label>Phone</label><input class="input" value="+91 98765 43210"></div><div class="field full"><label>Registered address</label><textarea class="input">Sanand Industrial Estate, Ahmedabad, Gujarat</textarea></div></div>`;
+    if(step===3) return `<div class="form-grid"><div class="field"><label>Sanctioned load</label><input class="input" value="5.0 MW"></div><div class="field"><label>Contracted demand</label><input class="input" value="4.4 MW"></div><div class="field"><label>Average monthly consumption</label><input class="input" value="24,000 MWh"></div><div class="field"><label>Average monthly bill</label><input class="input" value="₹12.1 Cr"></div><div class="field full"><label>Building type</label><select class="input"><option>Factory</option><option>Office</option><option>Mall</option><option>Warehouse</option><option>Institution</option><option>Other</option></select></div></div>`;
+    if(step===4) return `<div><p class="small">Upload demo documents. Files remain local in this prototype; only the filename is displayed.</p>${['GST certificate','Company registration certificate','Electricity bill','Authorized representative ID','Additional supporting document'].map((d,i)=>`<div class="upload-row"><div><strong style="font-size:.83rem">${d}</strong><div class="small" id="upload-status-${i}">Not uploaded</div></div><label class="btn btn-secondary btn-sm">Choose file<input type="file" data-upload-doc="${i}" hidden></label></div>`).join('')}</div>`;
+    return `<div style="text-align:center;padding:20px"><div style="font-size:2.6rem;margin-bottom:14px">✓</div><h3>Eligibility check</h3><p>Based on the demo company information, GreenWatt can run a preliminary eligibility assessment.</p><button class="btn btn-primary" type="button" data-run-eligibility>Run eligibility check</button><div id="eligibility-result" style="margin-top:18px"></div></div>`;
+  }
+  GW.authPages.register=()=>`<div class="auth-layout">${aside}<main class="auth-main"><div class="auth-card" style="width:min(620px,100%)"><a href="#/" class="small">← Back to website</a><h2 style="margin-top:18px">Register your company</h2><div class="stepper">${['Account','Company','Electricity','Documents','Eligibility'].map((s,i)=>`<div class="step ${GW.state.registerStep>=i+1?'active':''}">${s}</div>`).join('')}</div><form id="register-form">${registerFields(GW.state.registerStep)}<div class="form-actions">${GW.state.registerStep>1?'<button class="btn btn-secondary" type="button" data-reg-prev>Back</button>':''}${GW.state.registerStep<5?'<button class="btn btn-primary" type="submit">Continue</button>':''}</div></form></div></main></div>`;
+  GW.authPages.kyc=()=>`<div class="auth-layout">${aside}<main class="auth-main"><div class="auth-card"><a href="#/register" class="small">← Company registration</a><h2 style="margin-top:22px">Business verification</h2><p>Complete company KYC and eligibility checks before procurement plan approval.</p><div class="panel panel-pad"><div class="metric-row"><span>GST verification</span><span class="tag good">Verified</span></div><div class="metric-row"><span>Business documents</span><span class="tag warn">In review</span></div><div class="metric-row"><span>Electricity account</span><span class="tag good">Matched</span></div><div class="metric-row"><span>Open Access eligibility</span><span class="tag warn">Requires review</span></div></div><div class="notice warn" style="margin-top:16px"><span class="notice-dot"></span><div>Eligibility rules vary by state, consumer category and current regulations. This prototype does not claim universal eligibility.</div></div><button class="btn btn-primary btn-block" style="margin-top:18px" data-view-demo>Continue to Demo Dashboard</button></div></main></div>`;
+})(window.GreenWatt);
+
+</script>
+  <script>
+/* Inlined from assets/js/pages/app.js */
+window.GreenWatt = window.GreenWatt || {};
+(function(GW){
+  const C=GW.components,D=GW.data;
+  GW.appPages={};
+  GW.appPages.overview=()=>{
+    const CIcon=C.icon;
+    const now=new Date();
+    const hour=now.getHours();
+    const greeting=hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
+    const dayLabel=new Intl.DateTimeFormat('en-IN',{weekday:'long',day:'numeric',month:'long'}).format(now);
+    const marketRows=[48,52,60,76].map(i=>D.blocks[i]);
+    return C.appShell('overview',`
+      <div class="overview-hero-head">
+        <div class="overview-greeting"><div class="page-eyebrow">${dayLabel} · Gujarat</div><h1>${greeting}, Aarav.</h1><p>Here is tomorrow's electricity procurement outlook for ${D.company.short}.</p></div>
+        <div class="overview-actions"><button class="btn btn-secondary" data-command-palette>${CIcon('search',15)} Search</button><button class="btn btn-primary" data-run-simulation>${CIcon('play',15)} Run Simulation</button></div>
+      </div>
+
+      <div class="context-strip">
+        <div class="context-item"><span class="context-icon">${CIcon('market',17)}</span><div class="context-copy"><small>Market status</small><strong>IEX RTM open</strong><span>Next session in ~14 minutes</span></div></div>
+        <div class="context-item"><span class="context-icon">${CIcon('procurement',17)}</span><div class="context-copy"><small>Tomorrow's plan</small><strong>Ready for review</strong><span>65% DAM · 35% RTM</span></div></div>
+        <div class="context-item"><span class="context-icon">${CIcon('renewable',17)}</span><div class="context-copy"><small>Renewable outlook</small><strong>High midday solar</strong><span>62% estimated share</span></div></div>
+        <div class="context-item"><span class="context-icon">${CIcon('clock',17)}</span><div class="context-copy"><small>Forecast refresh</small><strong>07:30 IST</strong><span>96 blocks recalculated</span></div></div>
+      </div>
+
+      <div class="grid grid-4">
+        ${C.kpi("Today's electricity cost",GW.formatINR(D.today.cost),'3.8% below DISCOM baseline')}
+        ${C.kpi('Savings vs DISCOM',GW.formatINR(D.today.savings),'₹8.0L expected tomorrow')}
+        ${C.kpi('Renewable share',D.today.renewable+'%','+7 pts vs monthly average')}
+        ${C.kpi('CO₂ avoided',GW.formatNum(D.today.co2)+' kg','Configurable demo methodology')}
+      </div>
+
+      <div class="overview-layout">
+        <section class="panel panel-pad">
+          <div class="panel-head"><div><h3>Tomorrow's market & demand outlook</h3><p>DAM price range with expected load across 96 fifteen-minute blocks.</p></div><div class="chart-toolbar" aria-label="Forecast context"><span class="tag demo">Demo forecast</span><span class="tag good">Confidence 82%</span></div></div>
+          ${GW.priceChart('overview-price')}
+          <div class="legend"><span><i></i>Median prediction</span><span><i class="band"></i>P10–P90 range</span><span><i style="background:var(--ink)"></i>Actual when available</span></div>
+          <div class="forecast-summary"><div><small>Midday opportunity</small><strong>11:30–15:15 · ₹3.4–₹4.2/unit</strong></div><div><small>Expected demand</small><strong>800 MWh total · 104 MWh peak</strong></div><div><small>Primary driver</small><strong>High solar availability around midday</strong></div></div>
+        </section>
+
+        <div class="overview-stack">
+          <section class="panel panel-pad plan-hero">
+            <div class="panel-head"><div><h3>Recommended plan</h3><p>Optimization Engine · Linear Programming</p></div><span class="tag warn">Moderate risk</span></div>
+            <div class="plan-split"><div class="plan-split-card"><small>DAM allocation</small><strong>65%</strong><span>520 MWh</span></div><div class="plan-split-card"><small>RTM allocation</small><strong>35%</strong><span>280 MWh</span></div></div>
+            <div class="allocation" style="grid-template-columns:65fr 35fr"><span class="dam"></span><span class="rtm"></span></div>
+            ${C.metricList([['Estimated cost','₹32.0L'],['Expected savings','₹8.0L'],['Ceiling price','₹4.50/unit'],['Renewable share','62%']])}
+            <button class="btn btn-block" data-go-procurement>Review Procurement Plan ${CIcon('arrow',15)}</button>
+          </section>
+
+          <section class="panel panel-pad action-center">
+            <div class="panel-head"><div><h3>Action center</h3><p>Items that may need your attention.</p></div><span class="tag warn">2 open</span></div>
+            <div class="action-row"><span class="action-bullet">${CIcon('procurement',15)}</span><div class="action-row-content"><strong>Tomorrow's plan awaits approval</strong><span>Recommended before the DAM submission window.</span></div><button class="action-link" data-quick-route="/app/procurement">Review</button></div>
+            <div class="action-row"><span class="action-bullet">${CIcon('kyc',15)}</span><div class="action-row-content"><strong>Representative ID is in review</strong><span>No action required unless verification requests an update.</span></div><button class="action-link" data-quick-route="/app/kyc">View</button></div>
+            <div class="action-row"><span class="action-bullet">${CIcon('reports',15)}</span><div class="action-row-content"><strong>August performance report is ready</strong><span>Includes savings, market mix and renewable share.</span></div><button class="action-link" data-quick-route="/app/reports">Open</button></div>
+          </section>
+        </div>
+      </div>
+
+      <div class="savings-band">
+        <section class="panel panel-pad">
+          <div class="panel-head"><div><h3>Next market opportunities</h3><p>Representative upcoming blocks based on the current demo forecast.</p></div><button class="btn btn-secondary btn-sm" data-quick-route="/app/market">Open Live Market</button></div>
+          <div class="market-mini-list">${marketRows.map((d,idx)=>`<div class="market-mini-row"><span class="time">${d.time}</span><span class="price">₹${d.median.toFixed(2)}/unit</span><span class="renew">${d.renewable}% renewable</span><span class="status-text ${idx<2?'buy':'wait'}">${idx<2?'BUY WINDOW':'WATCH'}</span></div>`).join('')}</div>
+        </section>
+        <section class="panel panel-pad impact-card">
+          <div><div class="panel-head"><div><h3>Monthly savings</h3><p>September · simulated vs DISCOM benchmark</p></div></div><div class="impact-number">₹82.0L</div><div class="small">68% of the configured monthly opportunity captured</div><div class="impact-meter"><span></span></div></div>
+          <button class="btn btn-secondary btn-block" data-quick-route="/app/reports">View Savings & Reports</button>
+        </section>
+      </div>
+
+      <section class="panel panel-pad" style="margin-top:18px">
+        <div class="panel-head"><div><h3>Savings trend</h3><p>Monthly estimated savings against the configured DISCOM baseline.</p></div><span class="tag good">+13.9% YoY demo</span></div>
+        ${GW.lineChart('overview-savings',D.monthlySavings,['Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'])}
+      </section>
+
+      <div class="quick-links">
+        <button class="quick-link" data-quick-route="/app/forecast"><span class="kpi-icon">${CIcon('forecast',16)}</span><div><strong>Market Forecast</strong><span>Inspect all 96 blocks</span></div></button>
+        <button class="quick-link" data-quick-route="/app/optimizer"><span class="kpi-icon">${CIcon('optimizer',16)}</span><div><strong>Optimizer</strong><span>Test constraints & risk</span></div></button>
+        <button class="quick-link" data-quick-route="/app/trades"><span class="kpi-icon">${CIcon('trades',16)}</span><div><strong>Execution History</strong><span>Review simulated trades</span></div></button>
+        <button class="quick-link" data-quick-route="/app/profile"><span class="kpi-icon">${CIcon('profile',16)}</span><div><strong>Company Profile</strong><span>KYC & procurement defaults</span></div></button>
+      </div>
+    `);
+  };
+
+  GW.appPages.forecast=()=>C.appShell('forecast',`${C.pageHead('Market Forecast','DAM electricity-price forecast for tomorrow across all 96 blocks.',`<button class="btn btn-secondary" data-export-forecast>Export CSV</button>`)}<div class="grid grid-3"><section class="panel panel-pad span-2"><div class="panel-head"><div><h3>Tomorrow's DAM price curve</h3><p>Lower, median and upper predictions make uncertainty explicit.</p></div><span class="tag demo">XGBoost · demo</span></div>${GW.priceChart('forecast-price')}<div class="legend"><span><i></i>Median</span><span><i class="band"></i>Prediction range</span><span><i style="background:var(--ink)"></i>Actual when available</span></div></section><aside class="panel panel-pad"><h3>Model output</h3>${C.metricList([['Model','XGBoost'],['Output','P10 / P50 / P90'],['Midday low','₹3.42/unit'],['Evening high','₹7.58/unit'],['Avg renewable','55%']])}<div class="notice warn" style="margin-top:16px"><span class="notice-dot"></span><div>Forecasts are estimates, not guaranteed clearing prices.</div></div></aside></div><section class="panel panel-pad" style="margin-top:18px"><div class="panel-head"><div><h3>Block preview</h3><p>Representative forecast blocks.</p></div></div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Median</th><th>Range</th><th>Renewable</th><th>Expected demand</th><th>Weather</th></tr></thead><tbody>${D.blocks.filter((_,i)=>i%12===0).map(d=>`<tr><td>${d.time}</td><td>₹${d.median.toFixed(2)}</td><td>₹${d.lower.toFixed(2)}–₹${d.upper.toFixed(2)}</td><td>${d.renewable}%</td><td>${d.demand} MWh</td><td>${d.renewable>60?'High solar':'Mixed conditions'}</td></tr>`).join('')}</tbody></table></div></section>`);
+
+  GW.appPages.renewable=()=>C.appShell('renewable',`${C.pageHead("Tomorrow's Market Outlook",'Weather and renewable inputs that may influence market conditions.')}<div class="grid grid-4">${C.kpi('Temperature','36°C','High afternoon heat')}${C.kpi('Wind speed','14 km/h','Moderate')}${C.kpi('Solar irradiance','820 W/m²','High solar potential')}${C.kpi('Renewable availability','62%','Estimated daily share')}</div><div class="grid grid-2" style="margin-top:18px"><section class="panel panel-pad"><h3>Weather-driven context</h3><div style="padding:24px 0;font-size:1.25rem;line-height:2.1"><strong>High solar availability</strong><br><span class="muted">↓</span><br><strong>Higher renewable generation</strong><br><span class="muted">↓</span><br><strong>Potentially lower market prices</strong></div><div class="notice"><span class="notice-dot"></span><div>Renewable availability is expected to influence market conditions. The relationship is not presented as guaranteed.</div></div></section><section class="panel panel-pad"><h3>Renewable Forecast</h3><p>Inputs include solar irradiance, wind speed, hour, season and historical renewable percentage.</p>${GW.lineChart('renewable-line',D.blocks.filter((_,i)=>i%4===0).map(x=>x.renewable),D.blocks.filter((_,i)=>i%4===0).map(x=>x.time),'%',true)}${C.metricList([['Morning avg','39%'],['Midday avg','78%'],['Evening avg','28%'],['Daily estimate','62%']])}</section></div>`);
+
+  GW.appPages.load=()=>C.appShell('load',`${C.pageHead("Tomorrow's Electricity Demand",'LightGBM building-load forecast across 96 blocks.')}<div class="grid grid-3"><section class="panel panel-pad span-2"><div class="panel-head"><div><h3>Load curve</h3><p>Predicted demand vs same-site historical average.</p></div><span class="tag demo">LightGBM · demo</span></div>${GW.lineChart('load-line',D.blocks.map(x=>x.demand),D.blocks.map(x=>x.time),'MWh',true)}<div class="notice"><span class="notice-dot"></span><div>Higher temperatures may increase cooling-related electricity demand.</div></div></section><section class="panel panel-pad"><h3>Demand summary</h3>${C.metricList([['Forecast total','800 MWh'],['Expected peak','12:15 PM — 104 MWh'],['Expected minimum','03:45 AM — 31 MWh'],['Historical avg','762 MWh/day']])}</section></div><section class="panel panel-pad" style="margin-top:18px"><h3>Building information</h3><div class="grid grid-4" style="margin-top:18px">${[['Building type','Factory'],['Sanctioned load','5.0 MW'],['Monthly consumption','24,000 MWh'],['Average daily demand','~800 MWh']].map(x=>`<div class="soft-panel"><small>${x[0]}</small><div style="font-weight:700;margin-top:5px">${x[1]}</div></div>`).join('')}</div></section>`);
+
+  GW.appPages.procurement=()=>C.appShell('procurement',`${C.pageHead('Procurement Plan',"Recommended plan for tomorrow's forecasted demand.",`<button class="btn btn-primary" data-approve-plan>Approve Plan</button>`)}<div class="grid grid-3"><section class="panel panel-pad span-2"><div class="panel-head"><div><h3>Recommended procurement</h3><p>Optimization Engine — Linear Programming</p></div><span class="tag warn">Moderate risk</span></div><div class="grid grid-4"><div class="soft-panel"><small>Demand</small><div class="kpi-value">800 MWh</div></div><div class="soft-panel"><small>DAM</small><div class="kpi-value">65%</div><div class="small">520 MWh</div></div><div class="soft-panel"><small>RTM</small><div class="kpi-value">35%</div><div class="small">280 MWh</div></div><div class="soft-panel"><small>Renewable</small><div class="kpi-value">62%</div></div></div><div style="margin:24px 0"><div class="allocation" style="grid-template-columns:65fr 35fr"><span class="dam"></span><span class="rtm"></span></div><div class="allocation-labels"><span>DAM 65%</span><span>RTM 35%</span></div></div>${C.metricList([['Estimated cost','₹32,00,000'],['Estimated DISCOM cost','₹40,00,000'],['Estimated saving','₹8,00,000'],['Ceiling price','₹4.50/unit'],['Risk level','Moderate']])}</section><section class="panel panel-pad"><h3>Why this plan?</h3><p style="font-size:.9rem">Tomorrow's solar availability is expected to be high during midday, while predicted prices remain below the configured ceiling. The optimizer therefore recommends a higher DAM allocation for predictable blocks while retaining RTM flexibility.</p><details class="explainer"><summary>View decision factors</summary><ul class="factor-list" style="margin-top:12px"><li><span class="factor-plus">+</span>High solar forecast</li><li><span class="factor-plus">+</span>Predicted low midday prices</li><li><span class="factor-plus">+</span>Stable demand forecast</li><li><span class="factor-plus">+</span>Moderate risk tolerance</li><li><span class="factor-minus">−</span>Evening price uncertainty</li></ul></details></section></div><section class="panel panel-pad" style="margin-top:18px"><div class="panel-head"><div><h3>DAM vs RTM</h3><p>The optimizer balances predictability and flexibility; RTM is not assumed to be cheaper.</p></div></div><div class="table-wrap"><table><thead><tr><th>DAM</th><th>RTM</th></tr></thead><tbody><tr><td>Planned ahead</td><td>Near real-time</td></tr><tr><td>More predictable</td><td>More flexible</td></tr><tr><td>Lower uncertainty</td><td>Higher uncertainty</td></tr><tr><td>Locked earlier</td><td>Purchased closer to delivery</td></tr></tbody></table></div></section>`);
+
+  GW.appPages.optimizer=()=>C.appShell('optimizer',`${C.pageHead('Optimizer','Test procurement constraints and recalculate the recommended allocation.')}<div class="grid grid-2"><form class="panel panel-pad" id="optimizer-form"><div class="panel-head"><div><h3>Optimization inputs</h3><p>Optimization Engine — Linear Programming</p></div></div><div class="form-grid"><div class="field"><label>Total demand (MWh)</label><input class="input" type="number" name="demand" min="100" max="5000" value="${GW.state.optimizer.demand}"></div><div class="field"><label>Ceiling price (₹/unit)</label><input class="input" type="number" step="0.1" name="ceiling" min="2" max="12" value="${GW.state.optimizer.ceiling}"></div><div class="field"><label>Risk tolerance</label><select class="input" name="risk"><option ${GW.state.optimizer.risk==='Conservative'?'selected':''}>Conservative</option><option ${GW.state.optimizer.risk==='Moderate'?'selected':''}>Moderate</option><option ${GW.state.optimizer.risk==='Aggressive'?'selected':''}>Aggressive</option></select></div><div class="field"><label>Renewable priority</label><select class="input" name="renewable"><option>Low</option><option>Medium</option><option selected>High</option></select></div><div class="field full"><label>Procurement horizon</label><select class="input"><option>Tomorrow</option></select></div></div><div class="form-actions"><button class="btn btn-primary">Optimize strategy</button></div></form><section class="panel panel-pad" id="optimizer-result"><div class="panel-head"><div><h3>Optimized Procurement Strategy</h3><p>Calculated from the current demo constraints.</p></div><span class="tag warn">Moderate</span></div><div style="display:flex;gap:30px;margin:24px 0"><div><small>DAM</small><div class="kpi-value" id="opt-dam">65%</div></div><div><small>RTM</small><div class="kpi-value" id="opt-rtm">35%</div></div></div><div class="allocation" style="grid-template-columns:65fr 35fr"><span class="dam" id="opt-dam-bar"></span><span class="rtm" id="opt-rtm-bar"></span></div><div id="opt-metrics">${C.metricList([['Expected cost','₹32,00,000'],['Expected renewable share','62%'],['Expected risk','Moderate'],['Expected savings','₹8,00,000']])}</div><details class="explainer"><summary>Why did GreenWatt choose this plan?</summary><p style="margin-top:12px;font-size:.86rem">GreenWatt recommends 65% DAM because tomorrow's forecast indicates relatively stable and lower prices during several high-renewable blocks. The remaining 35% is retained for RTM to preserve short-term flexibility.</p></details></section></div>`);
+
+  GW.appPages.market=()=>C.appShell('market',`${C.pageHead('Live Market','RTM session monitoring for the demo market.',`<span class="tag demo">Simulation Mode</span>`)}<div class="grid grid-4">${C.kpi('Next RTM session','00:14:32','Countdown updates live','mono')}${C.kpi('Current market price','₹4.18/unit','Within ceiling')}${C.kpi('Predicted price','₹4.06/unit','Range ₹3.84–₹4.29')}${C.kpi('Ceiling price','₹4.50/unit','Configured company limit')}</div><section class="panel panel-pad" style="margin-top:18px"><div class="panel-head"><div><h3>Upcoming sessions</h3><p>BUY / WAIT / SKIP are decision-support actions in simulation mode.</p></div><span class="tag good">Market open</span></div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Predicted price</th><th>Renewable</th><th>Demand</th><th>Confidence</th><th>Action</th></tr></thead><tbody>${[['19:15','₹4.06','34%','92 MWh','High','BUY'],['19:30','₹4.32','31%','94 MWh','Medium','WAIT'],['19:45','₹4.63','29%','96 MWh','Medium','SKIP'],['20:00','₹4.47','27%','93 MWh','Medium','WAIT'],['20:15','₹4.21','26%','89 MWh','High','BUY']].map(r=>`<tr>${r.slice(0,5).map(x=>`<td>${x}</td>`).join('')}<td><button class="btn btn-secondary btn-sm" data-market-action="${r[5]}">${r[5]}</button></td></tr>`).join('')}</tbody></table></div></section><section class="panel panel-pad" style="margin-top:18px"><div class="panel-head"><div><h3>Execution Center</h3><p>Mock broker / execution simulator</p></div><span class="tag demo">Simulation Mode</span></div><div class="notice warn"><span class="notice-dot"></span><div><strong>Trades shown here are simulated using historical market data.</strong> No real electricity-market transaction is being executed.</div></div><div class="grid grid-3" style="margin-top:18px"><div class="soft-panel"><small>Plan status</small><h3 style="margin:6px 0">Approved</h3><span class="tag good">Ready</span></div><div class="soft-panel"><small>DAM orders</small><h3 style="margin:6px 0">Submitted</h3><span class="tag good">Accepted</span></div><div class="soft-panel"><small>DISCOM fallback</small><h3 style="margin:6px 0">Not triggered</h3><span class="tag">Standby</span></div></div></section>`);
+
+  GW.appPages.trades=()=>C.appShell('trades',`${C.pageHead('Procurement History','Filter and export simulated procurement history.',`<button class="btn btn-secondary" data-export-trades>Export CSV</button>`)}<section class="panel panel-pad"><div class="form-grid" style="margin-bottom:16px"><div class="field"><label>Market</label><select class="input" id="trade-market"><option>All</option><option>DAM</option><option>RTM</option><option>DISCOM</option></select></div><div class="field"><label>Status</label><select class="input" id="trade-status"><option>All</option><option>Accepted</option><option>Cleared</option><option>Skipped</option><option>Fallback</option></select></div></div><div class="table-wrap"><table id="trades-table"><thead><tr><th>Date</th><th>Time</th><th>Market</th><th>Quantity</th><th>Price</th><th>Status</th><th>Savings</th><th>Renewable %</th></tr></thead><tbody>${D.trades.map(r=>`<tr data-market="${r[2]}" data-status="${r[5]}">${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`);
+
+  GW.appPages.reports=()=>C.appShell('reports',`${C.pageHead('Savings & Performance','Cost, procurement mix and sustainability reporting.',`<button class="btn btn-primary" data-pdf-report>Download PDF Report</button>`)}<div class="grid grid-4">${C.kpi('Electricity purchased','24,180 MWh','This month')}${C.kpi('Average procurement price','₹4.02/unit','DISCOM benchmark ₹5.00')}${C.kpi('Total savings','₹82.0L','16.4% vs baseline')}${C.kpi('Renewable energy','14,992 MWh','62% estimated share')}</div><div class="grid grid-3" style="margin-top:18px"><section class="panel panel-pad span-2"><div class="panel-head"><div><h3>Monthly savings</h3><p>₹ lakh vs configured DISCOM benchmark.</p></div></div>${GW.barChart(D.monthlySavings,['Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'])}</section><section class="panel panel-pad"><h3>Procurement mix</h3><div style="display:grid;place-items:center;padding:20px 0"><div class="donut"><div class="donut-center"><strong>62%</strong><small>renewable</small></div></div></div>${C.metricList([['DAM','65%'],['RTM','27%'],['DISCOM fallback','8%']])}</section><section class="panel panel-pad span-2"><div class="panel-head"><div><h3>Daily savings</h3><p>Current month trend.</p></div></div>${GW.lineChart('daily-savings',D.dailySavings,D.dailySavings.map((_,i)=>String(i+1)))}</section><section class="panel panel-pad"><h3>Environmental Impact</h3>${C.metricList([['Renewable electricity used','14,992 MWh'],['Estimated CO₂ avoided','10,494 tonnes'],['Methodology','0.7 kg CO₂/unit demo fossil intensity']])}<div class="notice" style="margin-top:15px"><span class="notice-dot"></span><div>Equivalent conversions should only be shown when a stated methodology is configured.</div></div></section></div><section class="panel panel-pad" style="margin-top:18px"><h3>How we calculate this</h3><div class="feature-line"><strong>Savings</strong><p>Configured DISCOM benchmark cost − actual / simulated procurement cost.</p></div><div class="feature-line"><strong>Renewable share</strong><p>Estimated renewable electricity ÷ total electricity.</p></div><div class="feature-line"><strong>CO₂ avoided</strong><p>Based on the configured carbon-intensity methodology. Demo default uses 0.7 kg CO₂ per unit for fossil electricity and 0 for renewable electricity.</p></div></section>`);
+
+  GW.appPages.performance=()=>C.appShell('performance',`${C.pageHead('Forecast Performance','Demo / Simulated Metrics — replace these when real model evaluation is connected.')}<div class="grid grid-3"><section class="panel panel-pad"><span class="tag demo">Demo / Simulated Metrics</span><h3 style="margin-top:14px">DAM Price Model</h3>${C.metricList([['Model','XGBoost'],['MAPE','12.8%'],['Directional Accuracy','84.2%']])}</section><section class="panel panel-pad"><span class="tag demo">Demo / Simulated Metrics</span><h3 style="margin-top:14px">Load Model</h3>${C.metricList([['Model','LightGBM'],['MAPE','8.6%'],['Output','96-block demand']])}</section><section class="panel panel-pad"><h3>Training context</h3>${C.metricList([['Last training date',D.training.lastTraining],['Training samples',D.training.samples],['Validation period',D.training.validation]])}</section></div><div class="grid grid-2" style="margin-top:18px"><section class="panel panel-pad"><h3>Predicted vs actual price</h3>${GW.priceChart('perf-price',true)}</section><section class="panel panel-pad"><h3>Predicted vs actual load</h3>${GW.lineChart('perf-load',D.blocks.filter((_,i)=>i%4===0).map(x=>x.demand),D.blocks.filter((_,i)=>i%4===0).map(x=>x.time))}</section></div>`);
+
+  GW.appPages.profile=()=>C.appShell('profile',`${C.pageHead('Company Profile','Company information, electricity details and procurement preferences.',`<button class="btn btn-secondary" data-edit-profile>Edit Profile</button>`)}<div class="grid grid-2"><section class="panel panel-pad"><h3>Company information</h3>${C.metricList([['Company',D.company.name],['GSTIN',D.company.gstin],['Location',`${D.company.city}, ${D.company.state}`],['DISCOM',D.company.discom],['Contact',D.company.contact]])}</section><section class="panel panel-pad"><h3>KYC status</h3>${C.metricList([['GST verification','Verified'],['Business documents','In review'],['Eligibility','Requires review']])}<button class="btn btn-secondary btn-block" style="margin-top:16px" data-manage-docs>Manage Documents</button></section><section class="panel panel-pad"><h3>Electricity information</h3>${C.metricList([['Building type',D.company.buildingType],['Sanctioned load',D.company.sanctionedLoad],['Contracted demand',D.company.contractedDemand],['Monthly consumption',D.company.monthlyConsumption],['Monthly bill',D.company.monthlyBill]])}</section><section class="panel panel-pad"><h3>Procurement preferences</h3>${C.metricList([['Risk tolerance','Moderate'],['Ceiling price','₹4.50/unit'],['Renewable priority','High'],['Connected users','4 users']])}</section></div>`);
+
+  GW.appPages.kyc=()=>C.appShell('kyc',`${C.pageHead('KYC & Verification','Review business verification and preliminary procurement eligibility.')}<div class="grid grid-2"><section class="panel panel-pad"><h3>Verification status</h3><div class="metric-row"><span>GST certificate</span><span class="tag good">Verified</span></div><div class="metric-row"><span>Company registration</span><span class="tag good">Verified</span></div><div class="metric-row"><span>Electricity bill</span><span class="tag good">Matched</span></div><div class="metric-row"><span>Authorized representative ID</span><span class="tag warn">In review</span></div><button class="btn btn-secondary btn-block" style="margin-top:16px" data-manage-docs>Manage Documents</button></section><section class="panel panel-pad"><h3>Eligibility</h3><div style="font-size:1.4rem;font-weight:700;margin:18px 0">Eligibility Requires Review</div><p>Preliminary demo checks indicate the company's load profile may fit open-access evaluation, but state-specific rules, consumer category and current regulations require manual confirmation.</p><button class="btn btn-primary" data-run-eligibility>Run eligibility check</button></section></div>`);
+
+  GW.appPages.settings=()=>C.appShell('settings',`${C.pageHead('Settings','Company procurement defaults and notification preferences.')}<form class="panel panel-pad" id="settings-form"><div class="form-grid"><div class="field"><label>Default ceiling price (₹/unit)</label><input class="input" type="number" step=".1" value="4.5"></div><div class="field"><label>Risk tolerance</label><select class="input"><option>Conservative</option><option selected>Moderate</option><option>Aggressive</option></select></div><div class="field"><label>Renewable priority</label><select class="input"><option>Low</option><option>Medium</option><option selected>High</option></select></div><div class="field"><label>Carbon intensity methodology</label><select class="input"><option>Demo: 0.7 kg CO₂/unit fossil</option><option>Custom company methodology</option></select></div><div class="field full"><label><input type="checkbox" checked> Notify when RTM price crosses ceiling</label><label><input type="checkbox" checked> Notify when tomorrow's plan is ready</label><label><input type="checkbox" checked> Monthly savings report alert</label></div></div><div class="form-actions"><button class="btn btn-primary">Save settings</button></div></form>`);
+})(window.GreenWatt);
+
+</script>
+  <script>
+/* Inlined from assets/js/router.js */
+window.GreenWatt = window.GreenWatt || {};
+(function(GW){
+  GW.render = function(){
+    const app=document.getElementById('app');
+    const raw=(location.hash||'#/').slice(1); const parts=raw.split('/').filter(Boolean);
+    let html='';
+    if(parts[0]==='app'){
+      const page=parts[1]||'overview';
+      if(!GW.state.authenticated){ location.hash='#/login'; return; }
+      html=(GW.appPages[page]||GW.appPages.overview)();
+    } else if(parts[0]==='login') html=GW.authPages.login();
+    else if(parts[0]==='register') html=GW.authPages.register();
+    else if(parts[0]==='kyc') html=GW.authPages.kyc();
+    else if(parts[0]==='how') html=GW.publicPages.how();
+    else if(parts[0]==='solutions') html=GW.publicPages.solutions();
+    else if(parts[0]==='pricing') html=GW.publicPages.pricing();
+    else if(parts[0]==='contact') html=GW.publicPages.contact();
+    else html=GW.publicPages.home();
+    app.innerHTML=html; window.scrollTo(0,0); GW.bindPageEvents(); GW.bindChartInteractions();
+  };
+})(window.GreenWatt);
+
+</script>
+  <script>
+/* Inlined from assets/js/main.js */
+window.GreenWatt = window.GreenWatt || {};
+(function(GW){
+  function simulationModal(){
+    GW.openModal('Run historical simulation',`<p>Select a historical demo day to replay forecast → procurement plan → simulated trades → final cost → savings.</p><div class="field"><label>Simulation date</label><input class="input" id="sim-date" type="date" value="2026-09-09" max="2026-09-09"></div><div class="notice warn" style="margin-top:15px"><span class="notice-dot"></span><div>No live market transaction will be executed.</div></div><div class="form-actions"><button class="btn btn-secondary" data-modal-close="1">Cancel</button><button class="btn btn-primary" data-simulate-now>Run Simulation</button></div>`);
+  }
+  function notificationModal(){
+    GW.openModal('Notifications',`<div class="notice" style="margin-bottom:10px"><span class="notice-dot"></span><div><strong>Workspace notifications</strong><br><span class="small">Planning, market and verification updates for ABC Manufacturing.</span></div></div>${GW.data.notifications.map(n=>`<div class="metric-row"><div><strong>${n.title}</strong><div class="small">${n.time}</div></div><span>›</span></div>`).join('')}`);
+    document.querySelectorAll('.notification-badge').forEach(el=>el.remove());
+  }
+  function companyModal(){
+    GW.openModal('Company account',`<div class="metric-row"><span>Company</span><strong>ABC Manufacturing Pvt. Ltd.</strong></div><div class="metric-row"><span>Mode</span><span class="tag demo">Demo</span></div><div class="form-actions"><button class="btn btn-secondary" data-go-profile>Company Profile</button><button class="btn btn-danger" data-logout>Sign out</button></div>`);
+  }
+  function commandModal(){
+    const commands=[
+      ['overview','Overview',"Portfolio summary and tomorrow's outlook",'/app/overview'],
+      ['forecast','Market Forecast','DAM P10 / P50 / P90 price outlook','/app/forecast'],
+      ['procurement','Procurement Planner',"Review and approve tomorrow's plan",'/app/procurement'],
+      ['optimizer','Optimizer','Test risk, ceiling and renewable constraints','/app/optimizer'],
+      ['market','Live Market','Upcoming RTM sessions and actions','/app/market'],
+      ['trades','Trade History','Review simulated execution history','/app/trades'],
+      ['reports','Savings & Reports','Savings, renewable share and exports','/app/reports'],
+      ['profile','Company Profile','Company and electricity information','/app/profile']
+    ];
+    const I=GW.components.icon;
+    GW.openModal('Search GreenWatt',`<div class="command-search">${I('search',17)}<input class="input" id="command-search-input" autocomplete="off" placeholder="Search pages, planning and reports…"></div><div class="command-results" id="command-results">${commands.map((c,i)=>`<button class="command-result" data-command-route="${c[3]}" data-command-text="${(c[1]+' '+c[2]).toLowerCase()}"><span class="command-icon">${I(c[0],15)}</span><span class="command-result-copy"><strong>${c[1]}</strong><span>${c[2]}</span></span><kbd>${i+1}</kbd></button>`).join('')}</div>`);
+    document.querySelector('.modal-backdrop')?.classList.add('command-modal');
+    const input=document.getElementById('command-search-input');
+    input?.focus();
+    input?.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();document.querySelectorAll('[data-command-text]').forEach(row=>row.style.display=!q||row.dataset.commandText.includes(q)?'flex':'none');});
+  }
+  function docsModal(){
+    GW.openModal('Manage Documents',`<p class="small">Prototype upload manager. Files stay in your browser session.</p>${['GST certificate','Company registration certificate','Electricity bill','Authorized representative ID'].map((d,i)=>`<div class="upload-row"><div><strong>${d}</strong><div class="small">${i<3?'Verified':'In review'}</div></div><label class="btn btn-secondary btn-sm">Replace<input type="file" data-doc-replace hidden></label></div>`).join('')}`);
+    document.querySelectorAll('[data-doc-replace]').forEach(input=>input.onchange=()=>{if(input.files?.[0])GW.toast(`${input.files[0].name} selected for this demo session.`);});
+  }
+  function optimizerSubmit(form){
+    const fd=new FormData(form), demand=+fd.get('demand'), ceiling=+fd.get('ceiling'), risk=fd.get('risk'), renewable=fd.get('renewable');
+    let dam= risk==='Conservative'?72 : risk==='Aggressive'?55 :65;
+    if(renewable==='High') dam+=3; if(ceiling<4.2) dam-=8; dam=Math.max(40,Math.min(80,dam)); const rtm=100-dam;
+    const avgPrice=4.0 + (4.5-ceiling)*.12 + (risk==='Aggressive'?.05:risk==='Conservative'?.09:0);
+    const expected=Math.round(demand*1000*avgPrice), baseline=Math.round(demand*1000*5), savings=baseline-expected;
+    GW.state.optimizer={demand,ceiling,risk,renewable};
+    document.getElementById('opt-dam').textContent=dam+'%'; document.getElementById('opt-rtm').textContent=rtm+'%';
+    const bars=document.querySelector('.allocation'); bars.style.gridTemplateColumns=`${dam}fr ${rtm}fr`;
+    document.getElementById('opt-metrics').innerHTML=GW.components.metricList([['Expected cost',GW.formatINR(expected)],['Expected renewable share',renewable==='High'?'65%':renewable==='Medium'?'57%':'49%'],['Expected risk',risk],['Expected savings',GW.formatINR(savings)]]);
+    GW.toast('Optimization recalculated from your constraints.');
+  }
+  function pdfReport(){
+    const D=GW.data;
+    const html=`<!doctype html><html><head><title>GreenWatt Electricity Report</title><style>body{font:14px Arial;color:#17231d;padding:34px}h1{font-size:28px}table{width:100%;border-collapse:collapse;margin-top:20px}td,th{border-bottom:1px solid #ddd;padding:10px;text-align:left}.note{background:#f5f5f2;padding:12px;margin:18px 0} @media print{button{display:none}}</style></head><body><h1>GreenWatt — Electricity Procurement Report</h1><p><strong>${D.company.name}</strong><br>Reporting period: September 2026<br>Demo / simulated report</p><div class="note">Trades and performance values in this prototype are simulated. Use your browser's Print dialog and choose “Save as PDF”.</div><table><tr><th>Metric</th><th>Value</th></tr><tr><td>Total electricity consumed</td><td>24,180 MWh</td></tr><tr><td>DAM volume</td><td>15,717 MWh</td></tr><tr><td>RTM volume</td><td>6,529 MWh</td></tr><tr><td>DISCOM fallback</td><td>1,934 MWh</td></tr><tr><td>Average market price</td><td>₹4.02/unit</td></tr><tr><td>DISCOM benchmark</td><td>₹5.00/unit</td></tr><tr><td>Total savings</td><td>₹82.0L</td></tr><tr><td>Renewable share</td><td>62%</td></tr><tr><td>Estimated CO₂ avoided</td><td>10,494 tonnes</td></tr></table><h3>Methodology</h3><p>Savings = DISCOM benchmark cost − simulated procurement cost. Renewable share = renewable electricity / total electricity. CO₂ avoided uses the configured demo methodology (0.7 kg CO₂/unit fossil electricity; 0 for renewable).</p><button onclick="window.print()">Print / Save as PDF</button><script>setTimeout(()=>window.print(),350)<\/script></body></html>`;
+    const w=window.open('','_blank'); w.document.open(); w.document.write(html); w.document.close();
+  }
+  function applyTradeFilters(){
+    const market=document.getElementById('trade-market')?.value||'All', status=document.getElementById('trade-status')?.value||'All';
+    document.querySelectorAll('#trades-table tbody tr').forEach(tr=> tr.style.display=((market==='All'||tr.dataset.market===market)&&(status==='All'||tr.dataset.status===status))?'':'none');
+  }
+  function countdown(){
+    const el=[...document.querySelectorAll('.kpi-value')].find(x=>/^00:\d\d:\d\d$/.test(x.textContent)); if(!el) return;
+    let total=14*60+32; clearInterval(GW._countdown); GW._countdown=setInterval(()=>{ total--; if(total<0) total=15*60; const m=Math.floor(total/60),s=total%60; el.textContent=`00:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; },1000);
+  }
+
+  GW.bindPageEvents=function(){
+    countdown();
+    document.querySelectorAll('[data-view-demo]').forEach(el=>el.onclick=()=>{localStorage.setItem('gw_auth','1');GW.state.authenticated=true;GW.go('/app/overview');});
+    document.querySelectorAll('[data-run-simulation]').forEach(el=>el.onclick=simulationModal);
+    document.querySelectorAll('[data-notifications]').forEach(el=>el.onclick=notificationModal);
+    document.querySelectorAll('[data-company-menu]').forEach(el=>el.onclick=companyModal);
+    document.querySelectorAll('[data-command-palette]').forEach(el=>el.onclick=commandModal);
+    document.querySelectorAll('[data-quick-route]').forEach(el=>el.onclick=()=>GW.go(el.dataset.quickRoute));
+    document.querySelectorAll('[data-sidebar-toggle]').forEach(el=>el.onclick=()=>{document.getElementById('sidebar')?.classList.toggle('open')});
+    document.querySelectorAll('[data-modal-close]').forEach(el=>el.onclick=e=>{ if(e.target.dataset.modalClose) GW.closeModal(); });
+    document.querySelectorAll('[data-go-procurement]').forEach(el=>el.onclick=()=>GW.go('/app/procurement'));
+    document.querySelectorAll('[data-go-profile]').forEach(el=>el.onclick=()=>{GW.closeModal();GW.go('/app/profile')});
+    document.querySelectorAll('[data-logout]').forEach(el=>el.onclick=()=>{localStorage.removeItem('gw_auth');GW.state.authenticated=false;GW.closeModal();GW.go('/login');GW.toast('Signed out.');});
+    document.querySelectorAll('[data-manage-docs]').forEach(el=>el.onclick=docsModal);
+    document.querySelectorAll('[data-edit-profile]').forEach(el=>el.onclick=()=>GW.openModal('Edit Profile',`<form id="profile-edit-form"><div class="field"><label>Contact person</label><input class="input" value="Aarav Mehta"></div><div class="field" style="margin-top:12px"><label>Phone</label><input class="input" value="+91 98765 43210"></div><div class="form-actions"><button class="btn btn-primary" data-save-profile type="button">Save changes</button></div></form>`));
+    document.querySelectorAll('[data-approve-plan]').forEach(el=>el.onclick=()=>{el.textContent='Plan Approved';el.disabled=true;GW.toast('Procurement plan approved in Simulation Mode.');});
+    document.querySelectorAll('[data-market-action]').forEach(el=>el.onclick=()=>GW.toast(`${el.dataset.marketAction} action recorded for the simulated RTM session.`));
+    document.querySelectorAll('[data-export-trades]').forEach(el=>el.onclick=()=>GW.downloadCSV([['Date','Time','Market','Quantity','Price','Status','Savings','Renewable %'],...GW.data.trades],'greenwatt-trades.csv'));
+    document.querySelectorAll('[data-export-forecast]').forEach(el=>el.onclick=()=>GW.downloadCSV([['Time','Lower','Median','Upper','Renewable %','Demand MWh'],...GW.data.blocks.map(d=>[d.time,d.lower,d.median,d.upper,d.renewable,d.demand])],'greenwatt-dam-forecast.csv'));
+    document.querySelectorAll('[data-pdf-report]').forEach(el=>el.onclick=pdfReport);
+    document.querySelectorAll('[data-run-eligibility]').forEach(el=>el.onclick=()=>{const target=document.getElementById('eligibility-result'); if(target) target.innerHTML='<div class="notice warn"><span class="notice-dot"></span><div><strong>Eligibility Requires Review</strong><br>State rules, consumer category and current regulations require manual verification.</div></div>'; else GW.openModal('Eligibility result','<div class="notice warn"><span class="notice-dot"></span><div><strong>Eligibility Requires Review.</strong><br>State-specific rules and current regulations require manual confirmation.</div></div>');});
+    document.querySelectorAll('[data-reg-prev]').forEach(el=>el.onclick=()=>{GW.state.registerStep=Math.max(1,GW.state.registerStep-1);GW.render();});
+    document.querySelectorAll('[data-upload-doc]').forEach(inp=>inp.onchange=()=>{const st=document.getElementById('upload-status-'+inp.dataset.uploadDoc);if(st&&inp.files[0]){st.textContent=inp.files[0].name+' · Ready';GW.state.kycDocs[inp.dataset.uploadDoc]=inp.files[0].name;}});
+    const login=document.getElementById('login-form'); if(login) login.onsubmit=e=>{e.preventDefault();const pw=new FormData(login).get('password');if(String(pw).length<6)return;localStorage.setItem('gw_auth','1');GW.state.authenticated=true;GW.toast('Welcome to GreenWatt Demo.');GW.go('/app/overview');};
+    const reg=document.getElementById('register-form'); if(reg) reg.onsubmit=e=>{e.preventDefault();if(GW.state.registerStep<5){GW.state.registerStep++;GW.render();}};
+    const contact=document.getElementById('contact-form'); if(contact) contact.onsubmit=e=>{e.preventDefault();contact.reset();GW.toast('Enquiry captured in this demo.');};
+    const optimizer=document.getElementById('optimizer-form'); if(optimizer) optimizer.onsubmit=e=>{e.preventDefault();optimizerSubmit(optimizer);};
+    const settings=document.getElementById('settings-form'); if(settings) settings.onsubmit=e=>{e.preventDefault();GW.toast('Settings saved for this demo session.');};
+    document.getElementById('trade-market')?.addEventListener('change',applyTradeFilters); document.getElementById('trade-status')?.addEventListener('change',applyTradeFilters);
+    document.querySelectorAll('[data-forgot-password]').forEach(el=>el.onclick=()=>GW.openModal('Reset password','<p>Enter your business email and we’ll simulate sending a password-reset link.</p><div class="field"><label>Business email</label><input class="input" value="demo@greenwatt.in"></div><div class="form-actions"><button class="btn btn-primary" data-reset-send>Send reset link</button></div>'));
+    document.querySelectorAll('[data-mobile-public-menu]').forEach(el=>el.onclick=()=>GW.openModal('Navigation','<div class="metric-list"><a class="metric-row" href="#/how"><span>How it works</span><strong>›</strong></a><a class="metric-row" href="#/solutions"><span>Solutions</span><strong>›</strong></a><a class="metric-row" href="#/pricing"><span>Pricing</span><strong>›</strong></a><a class="metric-row" href="#/contact"><span>Contact</span><strong>›</strong></a><a class="metric-row" href="#/login"><span>Sign in</span><strong>›</strong></a></div>'));
+
+    document.getElementById('modal-root').onclick=e=>{
+      if(e.target.classList.contains('modal-backdrop')||e.target.dataset.modalClose) GW.closeModal();
+      if(e.target.matches('[data-simulate-now]')){e.target.textContent='Simulation complete';e.target.disabled=true;GW.toast('Historical simulation completed: forecast → plan → trades → savings.');setTimeout(GW.closeModal,800);}
+      if(e.target.matches('[data-save-profile]')){GW.toast('Profile changes saved for this demo session.');GW.closeModal();}
+      if(e.target.matches('[data-reset-send]')){GW.toast('Demo reset link sent.');GW.closeModal();}
+      const profile=e.target.closest('[data-go-profile]'); if(profile){GW.closeModal();GW.go('/app/profile');}
+      const logout=e.target.closest('[data-logout]'); if(logout){localStorage.removeItem('gw_auth');GW.state.authenticated=false;GW.closeModal();GW.go('/login');GW.toast('Signed out.');}
+      const command=e.target.closest('[data-command-route]'); if(command){GW.closeModal();GW.go(command.dataset.commandRoute);}
+    };
+  };
+  window.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'&&GW.state.authenticated){e.preventDefault();commandModal();}if(e.key==='Escape')GW.closeModal();});
+  window.addEventListener('hashchange',GW.render); window.addEventListener('DOMContentLoaded',GW.render);
+})(window.GreenWatt);
+
+</script>
+</body>
+</html>
