@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenWatt v2</title>
+    <!-- Chart.js & Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { --primary: #059669; --bg: #f9fafb; --text: #1f2937; }
+        body { font-family: -apple-system, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); }
+        header { background: white; padding: 1rem 2rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: bold; font-size: 1.5rem; color: var(--primary); }
+        .nav-links a { margin-left: 1rem; text-decoration: none; color: var(--text); cursor: pointer; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .view { display: none; }
+        .active { display: block; }
+        .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+        input, select, button { padding: 0.5rem; margin: 0.5rem 0; width: 100%; box-sizing: border-box; }
+        button { background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .metrics-banner { font-size: 0.85rem; color: #6b7280; text-align: center; margin-top: 1rem; }
+        .reason-box { background: #ecfdf5; border-left: 4px solid var(--primary); padding: 1rem; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">GreenWatt</div>
+    <div class="nav-links">
+        <a onclick="navigate('home')">Home</a>
+        <a onclick="navigate('signup')" id="nav-signup">Sign Up</a>
+        <a onclick="navigate('forecast')" id="nav-forecast" style="display:none;">Forecast</a>
+    </div>
+</header>
+
+<div class="container">
+    <!-- HOME VIEW -->
+    <div id="home" class="view active">
+        <div class="card">
+            <h2>Forecast IEX Prices with Local Weather Precision</h2>
+            <p>Plan your commercial power purchases around cheap, clean, renewable-heavy windows.</p>
+            <button onclick="navigate('signup')">Get Started</button>
+        </div>
+    </div>
+
+    <!-- SIGNUP VIEW -->
+    <div id="signup" class="view">
+        <div class="card" style="max-width: 400px; margin: 0 auto;">
+            <h2>Company Registration</h2>
+            <input type="text" id="reg-name" placeholder="Company Name">
+            <select id="reg-discom">
+                <option value="TATA">Tata Power</option>
+                <option value="ADANI">Adani Electricity</option>
+                <option value="BESCOM">BESCOM</option>
+            </select>
+            <!-- Step 2: City / Lat / Lon -->
+            <label><small>Required for precise weather-based prediction:</small></label>
+            <select id="reg-city" onchange="updateLatLon()">
+                <option value="">Select Primary City...</option>
+                <option value="Mumbai,19.0760,72.8777">Mumbai</option>
+                <option value="Delhi,28.7041,77.1025">Delhi</option>
+                <option value="Bengaluru,12.9716,77.5946">Bengaluru</option>
+                <option value="Rajkot,22.3039,70.8022">Rajkot</option> <!-- Demo Location -->
+            </select>
+            <input type="hidden" id="reg-lat">
+            <input type="hidden" id="reg-lon">
+            
+            <button onclick="handleSignup()">Complete Setup</button>
+        </div>
+    </div>
+
+    <!-- FORECAST VIEW -->
+    <div id="forecast" class="view">
+        <div class="card">
+            <h2>Live Price Forecast</h2>
+            <div style="display: flex; gap: 1rem;">
+                <input type="date" id="forecast-date" style="max-width: 200px;">
+                <select id="forecast-market" style="max-width: 200px;">
+                    <option value="dam">Day Ahead Market (DAM)</option>
+                    <option value="rtm">Real Time Market (RTM)</option>
+                </select>
+                <button onclick="loadForecast()" style="max-width: 150px;">Fetch Live</button>
+            </div>
+            
+            <div id="loading" style="display:none;">Calling live FastAPI model...</div>
+            <div id="stale-warning" style="display:none; color: red;"><small>⚠️ Open-Meteo unreachable. Using heuristic fallback.</small></div>
+            
+            <div class="reason-box" id="forecast-reason" style="display:none;"></div>
+            
+            <canvas id="priceChart" width="400" height="150" style="margin-top: 1rem;"></canvas>
+            
+            <div class="metrics-banner" id="model-metrics"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- Config ---
+    const SUPABASE_URL = 'https://mmjoxdnmuehfhtdkjhry.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1tam94ZG5tdWVoZmh0ZGtqaHJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwMzIyNjIsImV4cCI6MjEwNDYwODI2Mn0.abBcjrzxyHcyqwChE5zlIOqfizkPwF2D6IeODFzNykE';
+    const BACKEND_URL = 'http://localhost:8000'; // Change to Render URL in prod
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    let currentCompanyId = 'demo-1234'; // In real app, pull from Auth
+    let chartInstance = null;
+
+    // --- Routing ---
+    function navigate(viewId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        if(viewId === 'forecast') { fetchMetrics(); }
+    }
+
+    // --- Signup Logic ---
+    function updateLatLon() {
+        const val = document.getElementById('reg-city').value;
+        if(val) {
+            const [city, lat, lon] = val.split(',');
+            document.getElementById('reg-lat').value = lat;
+            document.getElementById('reg-lon').value = lon;
+        }
+    }
+
+    async function handleSignup() {
+        const name = document.getElementById('reg-name').value;
+        const discom = document.getElementById('reg-discom').value;
+        const cityData = document.getElementById('reg-city').value;
+        
+        if(!name || !cityData) return alert("Please fill all fields");
+        const [city_name, lat, lon] = cityData.split(',');
+
+        const { data, error } = await supabase.from('companies').insert([{
+            name, discom, city_name, lat: parseFloat(lat), lon: parseFloat(lon)
+        }]).select();
+
+        if(error) { alert("Error: " + error.message); return; }
+        
+        currentCompanyId = data[0].id;
+        document.getElementById('nav-signup').style.display = 'none';
+        document.getElementById('nav-forecast').style.display = 'inline';
+        
+        // Set today's date
+        document.getElementById('forecast-date').value = new Date().toISOString().split('T')[0];
+        navigate('forecast');
+    }
+
+    // --- Forecasting Logic (Live Backend Call) ---
+    async function loadForecast() {
+        const date = document.getElementById('forecast-date').value;
+        const market = document.getElementById('forecast-market').value;
+        if(!date) return;
+
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('stale-warning').style.display = 'none';
+        document.getElementById('forecast-reason').style.display = 'none';
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/predict/${market}?date=${date}&company_id=${currentCompanyId}`);
+            if(!res.ok) throw new Error("Backend error");
+            const data = await res.json();
+            
+            if(data.weather_stale) document.getElementById('stale-warning').style.display = 'block';
+
+            renderChart(data.blocks);
+            
+            // Extract the "why" reason from peak hours (e.g., block 48 = 12:00 PM)
+            const peakBlock = data.blocks[48]; 
+            if(peakBlock && peakBlock.reason) {
+                const reasonBox = document.getElementById('forecast-reason');
+                reasonBox.innerHTML = `<strong>Model Insight:</strong> ${peakBlock.reason}`;
+                reasonBox.style.display = 'block';
+            }
+
+        } catch (error) {
+            console.error(error);
+            document.getElementById('stale-warning').innerHTML = "⚠️ Backend unreachable. Showing fallback offline predictions.";
+            document.getElementById('stale-warning').style.display = 'block';
+            // Fallback UI rendering if backend dies
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+
+    function renderChart(blocks) {
+        const labels = blocks.map(b => b.time);
+        const mcp = blocks.map(b => b.predicted_mcp);
+        const ren = blocks.map(b => b.renewable_pct);
+
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        if(chartInstance) chartInstance.destroy();
+
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: 'Predicted MCP (₹/kWh)', data: mcp, borderColor: '#059669', backgroundColor: 'transparent', tension: 0.3, yAxisID: 'y' },
+                    { label: 'Renewable %', data: ren, borderColor: '#3b82f6', borderDash: [5, 5], backgroundColor: 'transparent', tension: 0.3, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { type: 'linear', position: 'left', title: { display: true, text: 'Price (₹)'} },
+                    y1: { type: 'linear', position: 'right', title: { display: true, text: 'Renewable Share %'} }
+                }
+            }
+        });
+    }
+
+    async function fetchMetrics() {
+        try {
+            const res = await fetch(`${BACKEND_URL}/model/metrics`);
+            const data = await res.json();
+            document.getElementById('model-metrics').innerText = 
+                `Model Version: ${data.model_version} | DAM MAPE: ${data.mape.dam}% | Directional Accuracy: ${data.directional_accuracy.dam}% | Last Retrained: ${new Date(data.trained_at).toLocaleDateString()}`;
+        } catch(e) {
+            console.log("Could not load metrics");
+        }
+    }
+</script>
+</body>
+</html>
