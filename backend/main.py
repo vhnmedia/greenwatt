@@ -74,10 +74,14 @@ async def predict_prices(market: str, date: str, company_id: str):
         return cache[cache_key]
 
     # 1. Fetch Company Location from Supabase
-    company_res = supabase.table("companies").select("city_name, lat, lon").eq("id", company_id).execute()
-    if not company_res.data:
-        raise HTTPException(status_code=404, detail="Company not found")
-    company = company_res.data[0]
+    # 1. Fetch Company Location (With fallback for the frontend demo ID)
+    if company_id == "demo-1234":
+        company = {"city_name": "Ahmedabad", "lat": 23.0225, "lon": 72.5714}
+    else:
+        company_res = supabase.table("companies").select("city_name, lat, lon").eq("id", company_id).execute()
+        if not company_res.data:
+            raise HTTPException(status_code=404, detail="Company not found")
+        company = company_res.data[0]
 
     # 2. Fetch Live Weather
     weather_data, is_stale = await fetch_weather(company['lat'], company['lon'], date)
