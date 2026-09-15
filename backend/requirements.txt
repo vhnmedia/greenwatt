@@ -8,3 +8,4 @@ pulp
 cachetools
 supabase
 scikit-learn
+openpyxl
