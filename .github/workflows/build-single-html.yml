@@ -42,7 +42,6 @@ jobs:
               if not path.exists():
                   return match.group(0)
               js = path.read_text(encoding='utf-8')
-              # Avoid accidentally terminating the surrounding script tag.
               js = js.replace('</script>', '<\\/script>')
               return f'<script>\n/* Inlined from {src} */\n{js}\n</script>'
 
@@ -62,6 +61,13 @@ jobs:
           banner = '<!-- GreenWatt single-file build: HTML + CSS + JavaScript bundled together. -->\n'
           (root / 'greenwatt-single.html').write_text(banner + source, encoding='utf-8')
           PY
+
+      - name: Upload single HTML artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: greenwatt-single-html
+          path: greenwatt-single.html
+          if-no-files-found: error
 
       - name: Commit generated single HTML
         shell: bash
