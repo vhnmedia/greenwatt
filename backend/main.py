@@ -14,7 +14,7 @@ from supabase import create_client, Client
 app = FastAPI(title="GreenWatt Backend v2")
 
 # CORS setup - MUST lock down to frontend origin in production
-origins = ["http://localhost:3000", "https://your-frontend.vercel.app"]
+origins = ["http://localhost:3000", "https://greenwattt.vercel.app"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -24,8 +24,8 @@ app.add_middleware(
 )
 
 # Supabase init (Using Service Role Key for Admin backend access)
-SUPABASE_URL = os.getenv("SUPABASE_URL", "https://your-project.supabase.co")
-SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "your-service-key")
+SUPABASE_URL = os.getenv("SUPABASE_URL", "https://mmjoxdnmuehfhtdkjhry.supabase.co")
+SUPABASE_KEY = os.getenv("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1tam94ZG5tdWVoZmh0ZGtqaHJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwMzIyNjIsImV4cCI6MjEwNDYwODI2Mn0.abBcjrzxyHcyqwChE5zlIOqfizkPwF2D6IeODFzNykE", "your-service-key")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # 15-minute cache for duplicate prediction requests
